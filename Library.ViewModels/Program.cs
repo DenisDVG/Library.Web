@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Entities
+namespace Library.ViewModels
 {
-    public class Book : Publication
+    class Program
     {
-        public int TomNumber { get; set; }
-
+        static void Main(string[] args)
+        {
+        }
     }
 }
