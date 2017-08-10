@@ -1,7 +1,78 @@
-﻿
+﻿@model Library.ViewModels.BookViewModels.IndexBookViewModel
 @{
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h1 class="page-header">Books</h1>
 
+<div class="row placeholders">
+    <div class="col-xs-6 col-sm-3 placeholder">
+        <a href="@Url.Action("Add", "Book")" class="btn btn-primary" id="myMarginLeft">Add New Book</a>
+    </div>
+   
+
+</div>
+
+<h2 class="sub-header">All books</h2>
+<div class="row">
+    <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+        <div class="form-group text-center">
+            <div class="col-xs-12" id="MyGrid" style="width:100%">
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<script>
+    $(document).ready(function () {
+
+
+        $("#MyGrid").kendoGrid({
+            dataSource: {
+                pageSize: 10,
+                transport: {
+                    read: function (e) {
+                        $.ajax({
+                            type: "GET",
+                            url: '@Url.Action("GetBooks", "Book")',
+                            contentType: "application/json; charset=utf-8",
+                            dataType: "json",
+                            success: function (data) {
+                                e.success(data);
+                            },
+                            error: function (data) {
+                                e.error("", "400", data);
+                            }
+                        });
+                    }
+                }
+            },
+            height: 300,
+            sortable: true,
+            pageable: true,
+            filterable: true,
+            pageable: {
+                refresh: true,
+                pageSizes: true,
+                buttonCount: 5
+            },
+            columns: [{
+                field: "Name",
+                title: "Name"
+            }, {
+                field: "Author",
+                title: "Author"
+            }, {
+                field: "TomNumber",
+                title: "Tom Number"
+            }, {
+                field: "Actions",
+                title: "Actions",
+                template: "<a href='/Book/Edit/${Id}'>Edit</a> | <a class='deleteLink' href='/Book/Delete/${Id}'>Delete</a>"
+            }]
+        });
+    })
+
+</script>
+<script src="~/Scripts/jquery-2.1.4.min.js"></script>

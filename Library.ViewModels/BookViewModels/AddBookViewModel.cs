@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.ViewModels.BookViewModels
 {
-    public class IndexViewModel
+    public class AddBookViewModel
     {
         public string Id { get; set; }
         public string Name { get; set; }

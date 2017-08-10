@@ -213,6 +213,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\dashboard.css" />
     <Content Include="Content\ie10-viewport-bug-workaround.css" />
+    <Content Include="Content\kendo.common.min.css" />
+    <Content Include="Content\kendo.metro.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -230,10 +232,16 @@
     <Content Include="Scripts\jquery-1.12.4.min.js" />
     <Content Include="Scripts\jquery-1.12.4.min.map" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery-2.1.4.min.js" />
+    <Content Include="Scripts\jquery.dynamiclist.js" />
+    <Content Include="Scripts\jquery.dynamiclist.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.dynamic.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.dynamic.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\kendo.all.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -273,6 +281,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Book\Index.cshtml" />
+    <Content Include="Views\Book\Add.cshtml" />
+    <Content Include="Views\Book\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -283,6 +293,20 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library.DataEF\Library.DataEF.csproj">
+      <Project>{B8F91A3F-24CB-4646-A00F-8E358537EBD5}</Project>
+      <Name>Library.DataEF</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.Entities\Library.Entities.csproj">
+      <Project>{F871B072-DAD2-4E85-B2E0-F949CA0A6B4A}</Project>
+      <Name>Library.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.ViewModels\Library.ViewModels.csproj">
+      <Project>{511e038e-5684-475b-8532-024042288db5}</Project>
+      <Name>Library.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
