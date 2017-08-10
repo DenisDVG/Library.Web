@@ -287,6 +287,8 @@
     <Content Include="Views\Book\Edit.cshtml" />
     <Content Include="Views\Shared\_LayoutUser.cshtml" />
     <Content Include="Views\Magazine\Index.cshtml" />
+    <Content Include="Views\Magazine\Add.cshtml" />
+    <Content Include="Views\Magazine\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

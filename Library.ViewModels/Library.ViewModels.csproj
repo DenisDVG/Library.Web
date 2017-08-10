@@ -43,6 +43,9 @@
     <Compile Include="BookViewModels\AddBookViewModel.cs" />
     <Compile Include="BookViewModels\EditBookViewModel.cs" />
     <Compile Include="BookViewModels\IndexBookViewModel.cs" />
+    <Compile Include="MagazineViewModels\AddMagazineViewModel.cs" />
+    <Compile Include="MagazineViewModels\EditMagazineViewModel.cs" />
+    <Compile Include="MagazineViewModels\IndexMagazineViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
