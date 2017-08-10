@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.BusinessLogic
+namespace Library.Entities
 {
-    public class Class1
+    public class Magazine : Publication
     {
-
+        public int MagazineNumber { get; set; }
     }
 }

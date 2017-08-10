@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Library.Entities
 {
-    public class Class1
+    public class Brochure : Publication
     {
+        public int TomFiling { get; set; }
     }
 }
