@@ -12,10 +12,12 @@ namespace Library.Web.Controllers
     {
         ApplicationContext _applicationContext;
         BookRepository _bookRepository;
+        MagazineRepository _magazineRepository;
         public HomeController()
         {
             _applicationContext = new ApplicationContext();
             _bookRepository = new BookRepository(_applicationContext);
+            _magazineRepository = new MagazineRepository(_applicationContext);
 
         }
         public ActionResult Index()
@@ -41,6 +43,11 @@ namespace Library.Web.Controllers
         {
             var books = _bookRepository.Get().ToList();
             return Json(books, JsonRequestBehavior.AllowGet);
+        }
+        public JsonResult GetMagazines()
+        {
+            var Magazines = _magazineRepository.Get().ToList();
+            return Json(Magazines, JsonRequestBehavior.AllowGet);
         }
     }
 }
