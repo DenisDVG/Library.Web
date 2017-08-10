@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
+    <Compile Include="Controllers\BrochureController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MagazineController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -289,6 +290,9 @@
     <Content Include="Views\Magazine\Index.cshtml" />
     <Content Include="Views\Magazine\Add.cshtml" />
     <Content Include="Views\Magazine\Edit.cshtml" />
+    <Content Include="Views\Brochure\Index.cshtml" />
+    <Content Include="Views\Brochure\Add.cshtml" />
+    <Content Include="Views\Brochure\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
