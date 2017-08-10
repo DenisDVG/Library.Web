@@ -56,14 +56,14 @@
         </div>
 
         <!-- Jumbotron -->
-        <div class="jumbotron">
+        @*<div class="jumbotron">
             <h1>Marketing stuff!</h1>
             <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
             <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
-        </div>
+        </div>*@
 
         <!-- Example row of columns -->
-        
+        <br/>
         @RenderBody()
         <!-- Site footer -->
         <footer class="footer">
@@ -71,6 +71,10 @@
         </footer>
 
     </div> <!-- /container -->
+    <link href="~/Content/kendo.common.min.css" rel="stylesheet" />
+    <link href="~/Content/kendo.metro.min.css" rel="stylesheet" />
+    <script src="@Url.Content("~/Scripts/kendo.all.min.js")"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="~/Content/ie10-viewport-bug-workaround.css" rel="stylesheet" />
 </body>
