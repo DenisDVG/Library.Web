@@ -11,7 +11,6 @@ namespace Library.Web.Controllers
         // GET: Book
         public ActionResult Index()
         {
-
             return View();
         }
     }
