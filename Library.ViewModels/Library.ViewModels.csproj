@@ -51,7 +51,12 @@
     <Compile Include="MagazineViewModels\IndexMagazineViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Library.Entities\Library.Entities.csproj">
+      <Project>{F871B072-DAD2-4E85-B2E0-F949CA0A6B4A}</Project>
+      <Name>Library.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

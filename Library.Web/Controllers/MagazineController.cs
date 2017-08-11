@@ -47,7 +47,6 @@ namespace Library.Web.Controllers
             }
             var magazineNew = new Magazine();
 
-            magazineNew.Author = view.Author;
             magazineNew.Name = view.Name;
             magazineNew.MagazineNumber = view.MagazineNumber;
             _magazineRepository.Insert(magazineNew);
@@ -63,7 +62,6 @@ namespace Library.Web.Controllers
             }
             var view = new EditMagazineViewModel();
             var magazine = _magazineRepository.GetByID(id);
-            view.Author = magazine.Author;
             view.Name = magazine.Name;
             view.MagazineNumber = magazine.MagazineNumber;
             return View(view);
@@ -73,7 +71,6 @@ namespace Library.Web.Controllers
         public ActionResult Edit(EditMagazineViewModel view)
         {
             var magazine = _magazineRepository.GetByID(view.Id);
-            magazine.Author = view.Author;
             magazine.Name = view.Name;
             magazine.MagazineNumber = view.MagazineNumber;
             _magazineRepository.Update(magazine);

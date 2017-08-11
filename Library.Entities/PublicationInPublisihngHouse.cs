@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library.Entities
 {
-    public class Book : Publication
+    public class PublicationInPublisihngHouse
     {
-        public int TomNumber { get; set; }
-        public string Author { get; set; }
-        public string NumberPages { get; set; }
-        public string PublishingYear { get; set; }
         public virtual Publication Publication { get; set; }
+        public virtual PublishingHouse PublishingHouse { get; set; }
+
     }
 }

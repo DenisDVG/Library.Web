@@ -9,5 +9,7 @@ namespace Library.Entities
     public class Magazine : Publication
     {
         public int MagazineNumber { get; set; }
+        public DateTime  PublicationDate { get; set; }
+        public virtual Publication Publication { get; set; }
     }
 }

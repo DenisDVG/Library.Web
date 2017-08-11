@@ -46,8 +46,7 @@ namespace Library.Web.Controllers
             }
             var brochureNew = new Brochure();
 
-            brochureNew.Author = view.Author;
-            brochureNew.Name = view.Name;
+
             brochureNew.TomFiling = view.TomFiling;
             _brochureRepository.Insert(brochureNew);
             _brochureRepository.Save();
@@ -62,8 +61,7 @@ namespace Library.Web.Controllers
             }
             var view = new EditBrochureViewModel();
             var brochure = _brochureRepository.GetByID(id);
-            view.Author = brochure.Author;
-            view.Name = brochure.Name;
+
             view.TomFiling = brochure.TomFiling;
             return View(view);
         }
@@ -72,8 +70,7 @@ namespace Library.Web.Controllers
         public ActionResult Edit(EditBrochureViewModel view)
         {
             var brochure = _brochureRepository.GetByID(view.Id);
-            brochure.Author = view.Author;
-            brochure.Name = view.Name;
+
             brochure.TomFiling = view.TomFiling;
             _brochureRepository.Update(brochure);
             _brochureRepository.Save();
