@@ -1,4 +1,8 @@
-﻿using System;
+﻿using Library.DataEF;
+using Library.DataEF.Repositories;
+using Library.Entities;
+using Library.ViewModels.PublishingHouseViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,78 +13,75 @@ namespace Library.Web.Controllers
     public class PublishingHouseController : Controller
     {
         // GET: PublishingHouse
+
+        ApplicationContext _applicationContext;
+        PublishingHouseRepository _publishingHouseRepository;
+        public PublishingHouseController()
+        {
+            _applicationContext = new ApplicationContext();
+            _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
+
+        }
+        // GET: PublishingHouse
         public ActionResult Index()
         {
             return View();
         }
-        //ApplicationContext _applicationContext;
-        //MagazineRepository _magazineRepository;
-        //public MagazineController()
-        //{
-        //    _applicationContext = new ApplicationContext();
-        //    _magazineRepository = new MagazineRepository(_applicationContext);
+        public JsonResult GetPublishingHouses()
+        {
+            var publishingHouses = _publishingHouseRepository.Get().ToList();
+            return Json(publishingHouses, JsonRequestBehavior.AllowGet);
+        }
 
-        //}
-        //// GET: Magazine
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-        //public JsonResult GetMagazines()
-        //{
-        //    var Magazines = _magazineRepository.Get().ToList();
-        //    return Json(Magazines, JsonRequestBehavior.AllowGet);
-        //}
+        [HttpGet]
+        public ActionResult Add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Add(AddPublishingHouseViewModel view)
+        {
+            if (view == null)
+            {
+                return RedirectToAction("Index", "PublishingHouse");
+            }
+            var publishingHouseNew = new PublishingHouse();
+            publishingHouseNew.Name = view.Name;
+            _publishingHouseRepository.Insert(publishingHouseNew);
+            _publishingHouseRepository.Save();
+            return RedirectToAction("Index", "PublishingHouse");
+        }
+        [HttpGet]
+        public ActionResult Edit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index", "PublishingHouse");
+            }
+            var view = new EditPublishingHouseViewModel();
+            var publishingHouse = _publishingHouseRepository.GetByID(id);
+            view.Name = publishingHouse.Name;
+            return View(view);
+        }
 
-        //[HttpGet]
-        //public ActionResult Add()
-        //{
-        //    return View();
-        //}
-        //[HttpPost]
-        //public ActionResult Add(AddMagazineViewModel view)
-        //{
-        //    if (view == null)
-        //    {
-        //        return RedirectToAction("Index", "Magazine");
-        //    }
-        //    var magazineNew = new Magazine();
-
-
-        //    magazineNew.MagazineNumber = view.MagazineNumber;
-        //    _magazineRepository.Insert(magazineNew);
-        //    _magazineRepository.Save();
-        //    return RedirectToAction("Index", "Magazine");
-        //}
-        //[HttpGet]
-        //public ActionResult Edit(string id)
-        //{
-        //    if (string.IsNullOrEmpty(id))
-        //    {
-        //        return RedirectToAction("Index", "Magazine");
-        //    }
-        //    var view = new EditMagazineViewModel();
-        //    var magazine = _magazineRepository.GetByID(id);
-
-        //    view.MagazineNumber = magazine.MagazineNumber;
-        //    return View(view);
-        //}
-
-        //[HttpPost]
-        //public ActionResult Edit(EditMagazineViewModel view)
-        //{
-        //    var magazine = _magazineRepository.GetByID(view.Id);
-
-        //    magazine.MagazineNumber = view.MagazineNumber;
-        //    _magazineRepository.Update(magazine);
-        //    _magazineRepository.Save();
-        //    return RedirectToAction("Index", "Magazine");
-        //}
-        //public ActionResult Delete(string id)
-        //{
-        //    _magazineRepository.Delete(id);
-        //    _magazineRepository.Save();
-        //    return RedirectToAction("Index", "Magazine");
-        //}
+        [HttpPost]
+        public ActionResult Edit(EditPublishingHouseViewModel view)
+        {
+            var publishingHouse = _publishingHouseRepository.GetByID(view.Id);
+            publishingHouse.Name = view.Name;
+            _publishingHouseRepository.Update(publishingHouse);
+            _publishingHouseRepository.Save();
+            return RedirectToAction("Index", "PublishingHouse");
+        }
+        public ActionResult Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return RedirectToAction("Index", "PublishingHouse");
+            }
+            _publishingHouseRepository.Delete(id);
+            _publishingHouseRepository.Save();
+            return RedirectToAction("Index", "PublishingHouse");
+        }
     }
 }

@@ -45,29 +45,47 @@
                 <ul class="nav nav-justified">
                     <li class="active">@Html.ActionLink("Home", "Index", "Home")</a></li>
                     <li>@Html.ActionLink("Adnim Panel", "Index", "Book")</li>
-                    <li><a href="#">Projects</a></li>
-                    <li><a href="#">Services</a></li>
-                    <li><a href="#">Downloads</a></li>
-                    <li><a href="#">About</a></li>
-                    <li><a href="#">Contact</a></li>
-                    @Html.Partial("_LoginPartial")
+
+                    @*@Html.Partial("_LoginPartial")*@
+
+                    @using Microsoft.AspNet.Identity
+
+                    @if (Request.IsAuthenticated)
+                    {
+                        using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <li>
+                                @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                            </li>
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">Log off</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</li>
+                            <li>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</li>
+                    }
+
                 </ul>
             </nav>
         </div>
 
         <!-- Jumbotron -->
         @*<div class="jumbotron">
-            <h1>Marketing stuff!</h1>
-            <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
-            <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
-        </div>*@
+                <h1>Marketing stuff!</h1>
+                <p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet.</p>
+                <p><a class="btn btn-lg btn-success" href="#" role="button">Get started today</a></p>
+            </div>*@
 
         <!-- Example row of columns -->
-        <br/>
+        <br />
+        <br />
+        <br />
         @RenderBody()
         <!-- Site footer -->
         <footer class="footer">
-            <p>&copy; 2016 Company, Inc.</p>
+            <p>&copy; 2017 Company, Inc.</p>
         </footer>
 
     </div> <!-- /container -->

@@ -226,7 +226,11 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Book\indexBook.js" />
+    <Content Include="Scripts\App\Brochure\indexBrochure.js" />
     <Content Include="Scripts\App\Hotel\indexHome.js" />
+    <Content Include="Scripts\App\Magazine\indexMagazine.js" />
+    <Content Include="Scripts\App\PublishingHouse\indexPublishingHouse.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="ApplicationInsights.config">
@@ -299,10 +303,12 @@
     <Content Include="Views\Brochure\Add.cshtml" />
     <Content Include="Views\Brochure\Edit.cshtml" />
     <Content Include="Views\Shared\_LayoutLogin.cshtml" />
+    <Content Include="Views\PublishingHouse\Index.cshtml" />
+    <Content Include="Views\PublishingHouse\Add.cshtml" />
+    <Content Include="Views\PublishingHouse\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\PublishingHouse\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

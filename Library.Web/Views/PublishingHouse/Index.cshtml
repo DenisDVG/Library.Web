@@ -1,20 +1,19 @@
-﻿@model Library.ViewModels.BookViewModels.IndexBookViewModel
-@{
+﻿@{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1 class="page-header">Books</h1>
+<h1 class="page-header">PublishingHouses</h1>
 
 <div class="row placeholders">
     <div class="col-xs-6 col-sm-3 placeholder">
-        <a href="@Url.Action("Add", "Book")" class="btn btn-primary" id="myMarginLeft">Add New Book</a>
+        <a href="@Url.Action("Add", "PublishingHouse")" class="btn btn-primary" id="myMarginLeft">Add New PublishingHouse</a>
     </div>
-   
+
 
 </div>
 
-<h2 class="sub-header">All books</h2>
+<h2 class="sub-header">All PublishingHouses</h2>
 <div class="row">
     <div class="col-xs-12 col-sm-8 col-sm-offset-2">
         <div class="form-group text-center">
@@ -23,6 +22,5 @@
         </div>
     </div>
 </div>
-    
-<script src="~/Scripts/App/Book/indexBook.js"></script>
 
+<script src="~/Scripts/App/PublishingHouse/indexPublishingHouse.js"></script>

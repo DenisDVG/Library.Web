@@ -52,6 +52,8 @@
     <Compile Include="MagazineViewModels\EditMagazineViewModel.cs" />
     <Compile Include="MagazineViewModels\IndexMagazineViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PublishingHouseViewModels\AddPublishingHouseViewModel.cs" />
+    <Compile Include="PublishingHouseViewModels\EditPublishingHouseViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Library.Entities\Library.Entities.csproj">
