@@ -5,7 +5,7 @@
 }
 
 
-<h1 class="page-header">Add Brochure</h1>
+<h1 class="page-header">Edit Brochure</h1>
 
 <div class="row placeholders">
     @using (Html.BeginForm())
@@ -21,26 +21,52 @@
                         <div class="form-group">
                             <label for="category" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
+                                @Html.TextBoxFor(x => x.PublicationName, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <p style="padding:5px;"></p>
                         <div class="form-group">
-                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Author</label>
+                            <label for="categoryNameAdd" class="col-sm-3 control-label">Publishing Houses</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(x => x.Author, new { @class = "form-control", required = "required" })
+                                @Html.DropDownListFor(m => m.PublishingHousesId, Model.PublishingHouses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id }).ToList(), new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <p style="padding:5px;"></p>
                         <div class="form-group">
-                            <label for="categoryNameAdd" class="col-sm-3 control-label">Tom Filing</label>
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Tom Filing</label>
                             <div class="col-sm-6">
                                 @Html.TextBoxFor(x => x.TomFiling, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">CoverType</label>
+                            <div class="col-sm-6">
+                                @Html.EnumDropDownListFor(m => m.CoverType, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Number Pages</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.NumberPages, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Publishing Year</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublishingYear, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy" })
                             </div>
                         </div>
                     </div>
@@ -64,5 +90,3 @@
     }
 
 </div>
-
-

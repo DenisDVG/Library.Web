@@ -10,7 +10,7 @@ namespace Library.Entities.Enums
     {
         None = 0,
         Book = 1,
-        Magazin = 2,
+        Magazine = 2,
         Brochure = 3
     }
 }

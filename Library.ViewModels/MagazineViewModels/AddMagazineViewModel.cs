@@ -1,4 +1,5 @@
-﻿using Library.Entities.Enums;
+﻿using Library.Entities;
+using Library.Entities.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,10 @@ namespace Library.ViewModels.MagazineViewModels
     public class AddMagazineViewModel
     {
         public string Id { get; set; }
-        public string Name { get; set; }
-        public PublicationType Type { get; set; }
-        public string PublishingHouseID { get; set; }
-        public string PublishingHouseName { get; set; }
+        public string PublicationName { get; set; }
+        public List<PublishingHouse> PublishingHouses { get; set; }
+        public string PublishingHousesId { get; set; }
         public int MagazineNumber { get; set; }
-        public DateTime PublicationDate { get; set; }
+        public DateTime? PublicationDate { get; set; }
     }
 }

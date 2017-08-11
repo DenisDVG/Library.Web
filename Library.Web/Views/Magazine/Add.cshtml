@@ -21,26 +21,34 @@
                         <div class="form-group">
                             <label for="category" class="col-sm-3 control-label">Name</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(x => x.Name, new { @class = "form-control", required = "required" })
+                                @Html.TextBoxFor(x => x.PublicationName, new { @class = "form-control", required = "required" })
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <p style="padding:5px;"></p>
                         <div class="form-group">
-                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Author</label>
+                            <label for="categoryNameAdd" class="col-sm-3 control-label">Publishing Houses</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(x => x.Author, new { @class = "form-control", required = "required" })
+                                @Html.DropDownListFor(m => m.PublishingHousesId, Model.PublishingHouses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id }).ToList(), new { @class = "form-control" })
                             </div>
                         </div>
                     </div>
-
                     <div class="row">
                         <p style="padding:5px;"></p>
                         <div class="form-group">
-                            <label for="categoryNameAdd" class="col-sm-3 control-label">Magazine Number</label>
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Magazine Number</label>
                             <div class="col-sm-6">
                                 @Html.TextBoxFor(x => x.MagazineNumber, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Publication Date</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublicationDate, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy" })
                             </div>
                         </div>
                     </div>

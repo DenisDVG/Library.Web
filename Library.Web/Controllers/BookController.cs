@@ -131,6 +131,16 @@ namespace Library.Web.Controllers
         }
         public ActionResult Delete(string id)
         {
+            var book = _bookRepository.GetByID(id);
+            var publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == book.Publication.Id).ToList();
+            foreach(var publicationInPublisihngHouse in publicationInPublisihngHouses)
+            {
+                _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouse.Id);
+                _publicationInPublisihngHouseRepository.Save();
+            }
+            _publicationRepository.Delete(book.Publication.Id);
+            _publicationRepository.Save();
+
             _bookRepository.Delete(id);
             _bookRepository.Save();
             return RedirectToAction("Index", "Book");
