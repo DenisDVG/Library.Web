@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace Library.Entities
 {
-    public class Magazine : Publication
+    public class Magazine : BaseEntity
     {
         public int MagazineNumber { get; set; }
-        public DateTime  PublicationDate { get; set; }
+        public DateTime?  PublicationDate { get; set; }
         public virtual Publication Publication { get; set; }
     }
 }

@@ -55,6 +55,9 @@
     <Compile Include="Repositories\BookRepository.cs" />
     <Compile Include="Repositories\BrochureRepository.cs" />
     <Compile Include="Repositories\MagazineRepository.cs" />
+    <Compile Include="Repositories\PublicationInPublisihngHouseRepository.cs" />
+    <Compile Include="Repositories\PublicationRepository.cs" />
+    <Compile Include="Repositories\PublishingHouseRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

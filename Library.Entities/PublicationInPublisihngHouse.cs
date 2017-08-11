@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Entities
 {
-    public class PublicationInPublisihngHouse
+    public class PublicationInPublisihngHouse : BaseEntity
     {
         public virtual Publication Publication { get; set; }
         public virtual PublishingHouse PublishingHouse { get; set; }
