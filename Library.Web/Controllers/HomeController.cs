@@ -1,5 +1,7 @@
 ﻿using Library.DataEF;
 using Library.DataEF.Repositories;
+using Library.Entities;
+using Library.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,11 +15,13 @@ namespace Library.Web.Controllers
         ApplicationContext _applicationContext;
         BookRepository _bookRepository;
         MagazineRepository _magazineRepository;
+        BrochureRepository _brochureRepository;
         public HomeController()
         {
             _applicationContext = new ApplicationContext();
             _bookRepository = new BookRepository(_applicationContext);
             _magazineRepository = new MagazineRepository(_applicationContext);
+            _brochureRepository = new BrochureRepository(_applicationContext);
 
         }
         public ActionResult Index()
@@ -39,15 +43,32 @@ namespace Library.Web.Controllers
             return View();
         }
 
-        public JsonResult GetBooks()
+        public JsonResult GetPublications()
         {
-            var books = _bookRepository.Get().ToList();
-            return Json(books, JsonRequestBehavior.AllowGet);
+            var books = _bookRepository.Get().Select(x => new GetPublicationHotelViewModels()
+            {
+                Id = x.Id,
+                Name = x.Publication.Name,
+                Type = x.Publication.Type.ToString()
+            }).ToList();
+            var magazines = _magazineRepository.Get().Select(x => new GetPublicationHotelViewModels()
+            {
+                Id = x.Id,
+                Name = x.Publication.Name,
+                Type = x.Publication.Type.ToString()
+            }).ToList();
+            var brochures = _brochureRepository.Get().Select(x => new GetPublicationHotelViewModels()
+            {
+                Id = x.Id,
+                Name = x.Publication.Name,
+                Type = x.Publication.Type.ToString()
+            }).ToList();
+            var publications = new List<GetPublicationHotelViewModels>();
+            publications.AddRange(books);
+            publications.AddRange(magazines);
+            publications.AddRange(brochures);
+            return Json(publications, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetMagazines()
-        {
-            var Magazines = _magazineRepository.Get().ToList();
-            return Json(Magazines, JsonRequestBehavior.AllowGet);
-        }
+
     }
 }
