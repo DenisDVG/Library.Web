@@ -218,6 +218,7 @@
     <Content Include="Content\justified-nav.css" />
     <Content Include="Content\kendo.common.min.css" />
     <Content Include="Content\kendo.metro.min.css" />
+    <Content Include="Content\signin.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -293,6 +294,7 @@
     <Content Include="Views\Brochure\Index.cshtml" />
     <Content Include="Views\Brochure\Add.cshtml" />
     <Content Include="Views\Brochure\Edit.cshtml" />
+    <Content Include="Views\Shared\_LayoutLogin.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
