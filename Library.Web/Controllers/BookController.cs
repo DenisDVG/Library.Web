@@ -19,6 +19,7 @@ namespace Library.Web.Controllers
         PublishingHouseRepository _publishingHouseRepository;
         PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
         PublicationRepository _publicationRepository;
+        //List<PublicationInPublisihngHouse> _publicationInPublisihngHouses;
         public BookController()
         {
             _applicationContext = new ApplicationContext();
@@ -26,6 +27,7 @@ namespace Library.Web.Controllers
             _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
             _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
             _publicationRepository = new PublicationRepository(_applicationContext);
+            //_publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get(includeProperties: "PublishingHouse, Publication").ToList();
 
         }
         // GET: Book
@@ -46,9 +48,7 @@ namespace Library.Web.Controllers
         [HttpGet]
         public ActionResult Add()
         {
-            var view = new AddBookViewModel();
-            view.PublishingHouses = _publishingHouseRepository.Get().ToList();
-            return View(view);
+            return View();
         }
         [HttpPost]
         public ActionResult Add(AddBookViewModel view)
@@ -73,7 +73,7 @@ namespace Library.Web.Controllers
             string[] subStrings = view.PublishingHousesIds.Split(',');
             foreach (var subString in subStrings)
             {
-                if(subString == Errors.Error.ToString())
+                if (subString == Errors.Error.ToString())
                 {
                     continue;
                 }
@@ -93,6 +93,14 @@ namespace Library.Web.Controllers
             _bookRepository.Save();
             return RedirectToAction("Index", "Book");
         }
+        public JsonResult GetPublishingHousesForEdit(string id)
+        {
+            var book = _bookRepository.GetByID(id);
+            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == book.Publication.Id).ToList();
+            var books = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => new { Id = x.PublishingHouse.Id, Name = x.PublishingHouse.Name }).ToList();
+            var distinctItems = books.GroupBy(x => x.Id).Select(y => y.First());
+            return Json(distinctItems, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Edit(string id)
         {
@@ -101,11 +109,7 @@ namespace Library.Web.Controllers
                 return RedirectToAction("Index", "Book");
             }
             var view = new EditBookViewModel();
-            view.PublishingHouses = _publishingHouseRepository.Get().ToList();
             var book = _bookRepository.GetByID(id);
-            var publicationInPublisihngHouseRepositoryFirst = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == book.Publication.Id).FirstOrDefault();
-            var PublishingHouseThisBook = publicationInPublisihngHouseRepositoryFirst.PublishingHouse;
-            view.PublishingHousesId = PublishingHouseThisBook.Id;
             view.Author = book.Author;
             view.NumberPages = book.NumberPages;
             view.PublicationName = book.Publication.Name;
@@ -113,7 +117,19 @@ namespace Library.Web.Controllers
             view.TomNumber = book.TomNumber;
             return View(view);
         }
-
+        public List<string> GetPublishingHousesForEditExistId(string id)
+        {
+            var book = _bookRepository.GetByID(id);
+            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == book.Publication.Id).ToList();
+            var books = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => x.Id = x.PublishingHouse.Id).ToList();
+            var distinctItems = books.GroupBy(x => x).Select(y => y.First()).ToList();
+            var stringItem = new List<string>();
+            foreach (var distinctItem in distinctItems)
+            {
+                stringItem.Add(distinctItem.ToString());
+            }
+            return stringItem;
+        }
         [HttpPost]
         public ActionResult Edit(EditBookViewModel view)
         {
@@ -126,22 +142,92 @@ namespace Library.Web.Controllers
             publication.Name = view.PublicationName;
             _publicationRepository.Update(publication);
             _publicationRepository.Save();
-            var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
-            x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == view.PublishingHousesId).FirstOrDefault();
-            if (publicationInPublisihngHouseRepository == null)
+            _bookRepository.Update(book);
+            _bookRepository.Save();
+            var publisihngHouseIdsExist = GetPublishingHousesForEditExistId(book.Id);
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            var idsNew = new List<string>();
+            for (int i = 0; i < subStrings.Length; i++)
             {
+                idsNew.Add(subStrings[i]);
+            }
+            if (publisihngHouseIdsExist.Count == subStrings.Length)
+            {
+                return RedirectToAction("Index", "Book");
+            }
+            if (publisihngHouseIdsExist.Count > idsNew.Count)
+            {
+                DeletePublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
+            }
+            if (publisihngHouseIdsExist.Count < idsNew.Count)
+            {
+                AddPublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
+            }
+            return RedirectToAction("Index", "Book");
+        }
+        private void AddPublicationInPublisihngHouses(Book book, List<string> publisihngHouseIdsExist, List<string> idsNew)
+        {
+            var stringForAdd = new List<string>();
+            foreach (var idNew in idsNew)
+            {
+                var isPublisihngHouseIdsExist = publisihngHouseIdsExist.Where(x => x == idNew).FirstOrDefault();
+                if (isPublisihngHouseIdsExist == null)
+                {
+                    stringForAdd.Add(idNew);
+                }
+            }
+            foreach (var subString in stringForAdd)
+            {
+                if (subString == Errors.Error.ToString())
+                {
+                    continue;
+                }
+                var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
+                x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
+                if(publicationInPublisihngHouseRepository != null)
+                {
+                    continue;
+                }
                 var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
-                publicationInPublisihngHouse.Publication = publication;
-                var publishingHouse = _publishingHouseRepository.GetByID(view.PublishingHousesId);
+                publicationInPublisihngHouse.Publication = book.Publication;
+                var publishingHouse = _publishingHouseRepository.GetByID(subString);
                 publicationInPublisihngHouse.PublishingHouse = publishingHouse;
                 _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
                 _publicationInPublisihngHouseRepository.Save();
-
             }
-            _bookRepository.Update(book);
-            _bookRepository.Save();
-            return RedirectToAction("Index", "Book");
         }
+        private void DeletePublicationInPublisihngHouses(Book book, List<string> publisihngHouseIdsExist, List<string> idsNew)
+        {
+            var stringForDelete = new List<string>();
+            foreach (var publisihngHouseIdExist in publisihngHouseIdsExist)
+            {
+                var isPublisihngHouseIdsExist = idsNew.Where(x => x == publisihngHouseIdExist).FirstOrDefault();
+                if (isPublisihngHouseIdsExist == null)
+                {
+                    stringForDelete.Add(publisihngHouseIdExist);
+                }
+            }
+            foreach (var subString in stringForDelete)
+            {
+                if (subString == Errors.Error.ToString())
+                {
+                    continue;
+                }
+                //    var publicationInPublisihngHouses = _publicationInPublisihngHouses.Where(x =>
+                //x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == subString).ToList();
+                var publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get(includeProperties: "PublishingHouse, Publication").ToList();
+                var publicationInPublisihngHousesSimple = _applicationContext.PublicationInPublisihngHouses.ToList();
+                foreach (var publicationInPublisihngHouse in publicationInPublisihngHouses)
+                {
+                    PublicationInPublisihngHouse publicationInPublisihngHouseNew = new PublicationInPublisihngHouse();
+                    publicationInPublisihngHouseNew = publicationInPublisihngHouse;
+                    _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouseNew);
+                    _publicationInPublisihngHouseRepository.Save();
+                }
+                
+            }
+        }
+
         public ActionResult Delete(string id)
         {
             var book = _bookRepository.GetByID(id);
