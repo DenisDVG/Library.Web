@@ -226,6 +226,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Book\AddBook.js" />
+    <Content Include="Scripts\App\Book\EditBook.js" />
     <Content Include="Scripts\App\Book\indexBook.js" />
     <Content Include="Scripts\App\Brochure\indexBrochure.js" />
     <Content Include="Scripts\App\Hotel\indexHome.js" />

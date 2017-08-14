@@ -15,6 +15,7 @@ namespace Library.ViewModels.BookViewModels
         public string PublicationName { get; set; }
         public List<PublishingHouse> PublishingHouses { get; set; }
         public string PublishingHousesId { get; set; }
+        public string PublishingHousesIds { get; set; }
         public int TomNumber { get; set; }
         public string Author { get; set; }
         public string NumberPages { get; set; }

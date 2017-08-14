@@ -38,7 +38,11 @@ namespace Library.Web.Controllers
             var books = _bookRepository.Get().Select(x => new { Id = x.Id, Type = PublicationType.Book.ToString(), Name = x.Publication.Name, Author = x.Author }).ToList();
             return Json(books, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetPublishingHouses()
+        {
+            var books = _publishingHouseRepository.Get().Select(x => new { Id = x.Id, Name = x.Name }).ToList();
+            return Json(books, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Add()
         {
@@ -65,16 +69,25 @@ namespace Library.Web.Controllers
             _publicationRepository.Insert(publication);
             _publicationRepository.Save();
             bookNew.TomNumber = view.TomNumber;
-            var publishingHouse = _publishingHouseRepository.GetByID(view.PublishingHousesId);
-            var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
-            x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
-            if(publicationInPublisihngHouseRepository == null)
+
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            foreach (var subString in subStrings)
             {
-                var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
-                publicationInPublisihngHouse.Publication = publication;
-                publicationInPublisihngHouse.PublishingHouse = publishingHouse;
-                _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
-                _publicationInPublisihngHouseRepository.Save();
+                if(subString == Errors.Error.ToString())
+                {
+                    continue;
+                }
+                var publishingHouse = _publishingHouseRepository.GetByID(subString);
+                var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
+                x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
+                if (publicationInPublisihngHouseRepository == null)
+                {
+                    var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
+                    publicationInPublisihngHouse.Publication = publication;
+                    publicationInPublisihngHouse.PublishingHouse = publishingHouse;
+                    _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
+                    _publicationInPublisihngHouseRepository.Save();
+                }
             }
             _bookRepository.Insert(bookNew);
             _bookRepository.Save();
@@ -133,7 +146,7 @@ namespace Library.Web.Controllers
         {
             var book = _bookRepository.GetByID(id);
             var publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == book.Publication.Id).ToList();
-            foreach(var publicationInPublisihngHouse in publicationInPublisihngHouses)
+            foreach (var publicationInPublisihngHouse in publicationInPublisihngHouses)
             {
                 _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouse.Id);
                 _publicationInPublisihngHouseRepository.Save();

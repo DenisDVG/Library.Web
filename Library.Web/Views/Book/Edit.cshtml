@@ -31,6 +31,7 @@
                             <label for="categoryNameAdd" class="col-sm-3 control-label">Publishing Houses</label>
                             <div class="col-sm-6">
                                 @Html.DropDownListFor(m => m.PublishingHousesId, Model.PublishingHouses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id }).ToList(), new { @class = "form-control" })
+                                <select id="orders" style="width: 400px;"></select>
                             </div>
                         </div>
                     </div>
@@ -90,7 +91,7 @@
     }
 
 </div>
-
+<script src="~/Scripts/App/Book/EditBook.js"></script>
 
 
 
