@@ -174,7 +174,6 @@ namespace Library.Services
                 var publicationInPublisihngHouses = _publicationInPublisihngHouses.Where(x =>
              x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
                 var publicationInPublisihngHousesSimple = _applicationContext.PublicationInPublisihngHouses.ToList();
-                publicationInPublisihngHouses.Id = "";
                 _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouses);
                 _publicationInPublisihngHouseRepository.Save();
 
