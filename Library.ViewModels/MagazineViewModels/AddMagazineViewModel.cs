@@ -12,8 +12,7 @@ namespace Library.ViewModels.MagazineViewModels
     {
         public string Id { get; set; }
         public string PublicationName { get; set; }
-        public List<PublishingHouse> PublishingHouses { get; set; }
-        public string PublishingHousesId { get; set; }
+        public string PublishingHousesIds { get; set; }
         public int MagazineNumber { get; set; }
         public DateTime? PublicationDate { get; set; }
     }

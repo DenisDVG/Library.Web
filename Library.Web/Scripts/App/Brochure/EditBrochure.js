@@ -9,7 +9,7 @@ $(document).ready(function () {
     $.when(
     $.ajax({
         type: "GET",
-        url: '/Book/GetPublishingHousesForEdit?id=' + $("#itemId").val(),
+        url: '/Brochure/GetPublishingHousesForEdit?id=' + $("#itemId").val(),
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
@@ -35,7 +35,7 @@ $(document).ready(function () {
                 read: function (e) {
                     $.ajax({
                         type: "GET",
-                        url: '/Book/GetPublishingHouses',
+                        url: '/Brochure/GetPublishingHouses',
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",
                         success: function (data) {

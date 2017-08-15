@@ -12,8 +12,7 @@ namespace Library.ViewModels.BrochureViewModels
     {
         public string Id { get; set; }
         public string PublicationName { get; set; }
-        public List<PublishingHouse> PublishingHouses { get; set; }
-        public string PublishingHousesId { get; set; }
+        public string PublishingHousesIds { get; set; }
         public int TomFiling { get; set; }
         public CoverType CoverType { get; set; }
         public string NumberPages { get; set; }

@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-
+    $("ul.nav-sidebar li").each(function () {
+        $(this).removeClass("active");
+    });
+    $("#publishingHouseActionLink").addClass("active");
 
     $("#MyGrid").kendoGrid({
         dataSource: {
@@ -13,6 +16,7 @@
                         dataType: "json",
                         success: function (data) {
                             e.success(data);
+                            console.log(data);
                         },
                         error: function (data) {
                             e.error("", "400", data);
@@ -31,7 +35,7 @@
             buttonCount: 5
         },
         columns: [{
-            field: "Name",
+            field: "PublishingHouseName",
             title: "Name"
         }, {
             field: "Actions",
@@ -40,3 +44,4 @@
         }]
     });
 })
+

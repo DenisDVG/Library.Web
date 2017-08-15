@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    public class Class1
+    class PublishingHouseService
     {
     }
 }

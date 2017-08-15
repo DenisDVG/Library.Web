@@ -46,7 +46,7 @@ namespace Library.Web.Controllers
                 return RedirectToAction("Index", "PublishingHouse");
             }
             var publishingHouseNew = new PublishingHouse();
-            publishingHouseNew.Name = view.Name;
+            publishingHouseNew.PublishingHouseName = view.Name;
             _publishingHouseRepository.Insert(publishingHouseNew);
             _publishingHouseRepository.Save();
             return RedirectToAction("Index", "PublishingHouse");
@@ -60,7 +60,7 @@ namespace Library.Web.Controllers
             }
             var view = new EditPublishingHouseViewModel();
             var publishingHouse = _publishingHouseRepository.GetByID(id);
-            view.Name = publishingHouse.Name;
+            view.Name = publishingHouse.PublishingHouseName;
             return View(view);
         }
 
@@ -68,7 +68,7 @@ namespace Library.Web.Controllers
         public ActionResult Edit(EditPublishingHouseViewModel view)
         {
             var publishingHouse = _publishingHouseRepository.GetByID(view.Id);
-            publishingHouse.Name = view.Name;
+            publishingHouse.PublishingHouseName = view.Name;
             _publishingHouseRepository.Update(publishingHouse);
             _publishingHouseRepository.Save();
             return RedirectToAction("Index", "PublishingHouse");

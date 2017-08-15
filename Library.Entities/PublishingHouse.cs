@@ -8,6 +8,6 @@ namespace Library.Entities
 {
     public class PublishingHouse : BaseEntity
     {
-        public string Name { get; set; }
+        public string PublishingHouseName { get; set; }
     }
 }
