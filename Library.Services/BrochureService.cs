@@ -3,6 +3,7 @@ using Library.DataEF.Repositories;
 using Library.Entities;
 using Library.Entities.Enums;
 using Library.ViewModels.BookViewModels;
+using Library.ViewModels.BrochureViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,59 +12,60 @@ using System.Threading.Tasks;
 
 namespace Library.Services
 {
-    public class BookService
+    public class BrochureService
     {
+
         ApplicationContext _applicationContext;
-        BookRepository _bookRepository;
+        BrochureRepository _brochureRepository;
         PublishingHouseRepository _publishingHouseRepository;
         PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
         PublicationRepository _publicationRepository;
         List<PublicationInPublisihngHouse> _publicationInPublisihngHouses;
-        List<Book> _books;
+        List<Brochure> _brochures;
         List<PublishingHouse> _publishingHouses;
         List<Publication> _publications;
-        public BookService()
+        public BrochureService()
         {
             _applicationContext = new ApplicationContext();
-            _bookRepository = new BookRepository(_applicationContext);
+            _brochureRepository = new BrochureRepository(_applicationContext);
             _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
             _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
             _publicationRepository = new PublicationRepository(_applicationContext);
             _publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get(/*includeProperties: "PublishingHouse, Publication"*/).ToList();
-            _books = _bookRepository.Get(includeProperties: "Publication").ToList();
+            _brochures = _brochureRepository.Get(includeProperties: "Publication").ToList();
             _publishingHouses = _publishingHouseRepository.Get().ToList();
             _publications = _publicationRepository.Get().ToList();
         }
-        public List<GetBooksViewModel> GetBooks()
+        public List<GetBrochuresViewModel> GetBrochures()
         {
-            return _books.Select(x => new GetBooksViewModel { Id = x.Id, Type = PublicationType.Book.ToString(), Name = x.Publication.Name, Author = x.Author }).ToList();
+            return _brochures.Select(x => new GetBrochuresViewModel { Id = x.Id, Type = PublicationType.Brochure.ToString(), Name = x.Publication.Name, NumberPages = x.NumberPages }).ToList();
 
         }
         public List<PublishingHousesVieModel> GetPublishingHouses()
         {
             return _publishingHouses.Select(x => new PublishingHousesVieModel { Id = x.Id, Name = x.PublishingHouseName }).ToList();
         }
-        public Publication InsertPablication(AddBookViewModel view)
+        public Publication InsertPablication(AddBrochureViewModel view)
         {
             var publication = new Publication();
             publication.Name = view.PublicationName;
-            publication.Type = PublicationType.Book;
+            publication.Type = PublicationType.Brochure;
             _publicationRepository.Insert(publication);
             _publicationRepository.Save();
             return publication;
         }
-        public void InsertBook(AddBookViewModel view, Publication publication)
+        public void InsertBrochure(AddBrochureViewModel view, Publication publication)
         {
-            var bookNew = new Book();
-            bookNew.Author = view.Author;
-            bookNew.NumberPages = view.NumberPages;
-            bookNew.Publication = publication;
-            bookNew.PublishingYear = view.PublishingYear;
-            bookNew.TomNumber = view.TomNumber;
-            _bookRepository.Insert(bookNew);
-            _bookRepository.Save();
+            var BrochureNew = new Brochure();
+            BrochureNew.CoverType = view.CoverType;
+            BrochureNew.NumberPages = view.NumberPages;
+            BrochureNew.Publication = publication;
+            BrochureNew.PublishingYear = view.PublishingYear;
+            BrochureNew.TomFiling = view.TomFiling;
+            _brochureRepository.Insert(BrochureNew);
+            _brochureRepository.Save();
         }
-        public void InsertPublicationInPublisihngHouse(AddBookViewModel view, Publication publication)
+        public void InsertPublicationInPublisihngHouse(AddBrochureViewModel view, Publication publication)
         {
             string[] subStrings = view.PublishingHousesIds.Split(',');
             foreach (var subString in subStrings)
@@ -88,15 +90,15 @@ namespace Library.Services
 
         public List<PublishingHousesVieModel> GetPublishingHousesForEdit(string id)
         {
-            var book = GetBookById(id);
-            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouses.Where(x => x.Publication.Id == book.Publication.Id).ToList();
-            var books = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => new PublishingHousesVieModel { Id = x.PublishingHouse.Id, Name = x.PublishingHouse.PublishingHouseName }).ToList();
-            var distinctItems = books.GroupBy(x => x.Id).Select(y => y.First()).ToList();
+            var Brochure = GetBrochureById(id);
+            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouses.Where(x => x.Publication.Id == Brochure.Publication.Id).ToList();
+            var Brochures = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => new PublishingHousesVieModel { Id = x.PublishingHouse.Id, Name = x.PublishingHouse.PublishingHouseName }).ToList();
+            var distinctItems = Brochures.GroupBy(x => x.Id).Select(y => y.First()).ToList();
             return distinctItems;
         }
-        public List<string> GetPublishingHousesForEditExistId(Book book)
+        public List<string> GetPublishingHousesForEditExistId(Brochure Brochure)
         {
-            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouses.Where(x => x.Publication.Id == book.Publication.Id).ToList();
+            var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouses.Where(x => x.Publication.Id == Brochure.Publication.Id).ToList();
             var ids = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => x.PublishingHouse.Id).ToList();
             var distinctItems = ids.GroupBy(x => x).Select(y => y.First()).ToList();
             var stringItem = new List<string>();
@@ -106,22 +108,22 @@ namespace Library.Services
             }
             return stringItem;
         }
-        public Book UpdateBook(EditBookViewModel view)
+        public Brochure UpdateBrochure(EditBrochureViewModel view)
         {
-            var book = GetBookById(view.Id);
-            book.Author = view.Author;
-            book.TomNumber = view.TomNumber;
-            book.NumberPages = view.NumberPages;
-            book.PublishingYear = view.PublishingYear;
-            var publication = _publications.Where(x => x.Id == book.Publication.Id).FirstOrDefault();
+            var Brochure = GetBrochureById(view.Id);
+            Brochure.TomFiling = view.TomFiling;
+            Brochure.CoverType = view.CoverType;
+            Brochure.NumberPages = view.NumberPages;
+            Brochure.PublishingYear = view.PublishingYear;
+            var publication = _publications.Where(x => x.Id == Brochure.Publication.Id).FirstOrDefault();
             publication.Name = view.PublicationName;
             _publicationRepository.Update(publication);
             _publicationRepository.Save();
-            _bookRepository.Update(book);
-            _bookRepository.Save();
-            return book;
+            _brochureRepository.Update(Brochure);
+            _brochureRepository.Save();
+            return Brochure;
         }
-        public void AddPublicationInPublisihngHouses(Book book, List<string> publisihngHouseIdsExist, List<string> idsNew)
+        public void AddPublicationInPublisihngHouses(Brochure Brochure, List<string> publisihngHouseIdsExist, List<string> idsNew)
         {
             var stringForAdd = new List<string>();
             foreach (var idNew in idsNew)
@@ -139,13 +141,13 @@ namespace Library.Services
                     continue;
                 }
                 var publicationInPublisihngHouseRepository = _publicationInPublisihngHouses.Where(x =>
-                x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
+                x.Publication.Id == Brochure.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
                 if (publicationInPublisihngHouseRepository != null)
                 {
                     continue;
                 }
                 var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
-                publicationInPublisihngHouse.Publication = book.Publication;
+                publicationInPublisihngHouse.Publication = Brochure.Publication;
                 var publishingHouse = _publishingHouses.Where(x => x.Id == subString).FirstOrDefault();
                 publicationInPublisihngHouse.PublishingHouse = publishingHouse;
                 _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
@@ -153,7 +155,7 @@ namespace Library.Services
             }
         }
 
-        public void DeletePublicationInPublisihngHouses(Book book, List<string> publisihngHouseIdsExist, List<string> idsNew)
+        public void DeletePublicationInPublisihngHouses(Brochure Brochure, List<string> publisihngHouseIdsExist, List<string> idsNew)
         {
             var stringForDelete = new List<string>();
             foreach (var publisihngHouseIdExist in publisihngHouseIdsExist)
@@ -171,7 +173,7 @@ namespace Library.Services
                     continue;
                 }
                 var publicationInPublisihngHouses = _publicationInPublisihngHouses.Where(x =>
-             x.Publication.Id == book.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
+             x.Publication.Id == Brochure.Publication.Id && x.PublishingHouse.Id == subString).FirstOrDefault();
                 var publicationInPublisihngHousesSimple = _applicationContext.PublicationInPublisihngHouses.ToList();
                 _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouses);
                 _publicationInPublisihngHouseRepository.Save();
@@ -180,27 +182,26 @@ namespace Library.Services
             }
         }
 
-        public void DeleteBook(string id)
+        public void DeleteBrochure(string id)
         {
-            var book = GetBookById(id);
-            var publicationInPublisihngHouses = _publicationInPublisihngHouses.Where(x => x.Publication.Id == book.Publication.Id).ToList();
+            var Brochure = GetBrochureById(id);
+            var publicationInPublisihngHouses = _publicationInPublisihngHouses.Where(x => x.Publication.Id == Brochure.Publication.Id).ToList();
             foreach (var publicationInPublisihngHouse in publicationInPublisihngHouses)
             {
                 _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouse.Id);
                 _publicationInPublisihngHouseRepository.Save();
             }
-            _publicationRepository.Delete(book.Publication.Id);
+            _publicationRepository.Delete(Brochure.Publication.Id);
             _publicationRepository.Save();
 
-            _bookRepository.Delete(id);
-            _bookRepository.Save();
+            _brochureRepository.Delete(id);
+            _brochureRepository.Save();
         }
-        public Book GetBookById(string id)
+        public Brochure GetBrochureById(string id)
         {
-            return _books.Where(x => x.Id == id).FirstOrDefault();
+            return _brochures.Where(x => x.Id == id).FirstOrDefault();
 
         }
-
 
     }
 }

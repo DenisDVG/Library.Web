@@ -2,6 +2,7 @@
 using Library.DataEF.Repositories;
 using Library.Entities;
 using Library.Entities.Enums;
+using Library.Services;
 using Library.ViewModels.MagazineViewModels;
 using System;
 using System.Collections.Generic;
@@ -14,19 +15,10 @@ namespace Library.Web.Controllers
     [Authorize]
     public class MagazineController : Controller
     {
-        ApplicationContext _applicationContext;
-        MagazineRepository _magazineRepository;
-        PublishingHouseRepository _publishingHouseRepository;
-        PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
-        PublicationRepository _publicationRepository;
+        MagazineService _service;
         public MagazineController()
         {
-            _applicationContext = new ApplicationContext();
-            _magazineRepository = new MagazineRepository(_applicationContext);
-            _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
-            _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
-            _publicationRepository = new PublicationRepository(_applicationContext);
-
+            _service = new MagazineService();
         }
         // GET: Magazine
         public ActionResult Index()
@@ -35,16 +27,18 @@ namespace Library.Web.Controllers
         }
         public JsonResult GetMagazines()
         {
-            var magazines = _magazineRepository.Get().Select(x => new { Id = x.Id, Type = PublicationType.Magazine.ToString(), Name = x.Publication.Name, MagazineNumber = x.MagazineNumber }).ToList();
-            return Json(magazines, JsonRequestBehavior.AllowGet);
+            var items = _service.GetMagazines();
+            return Json(items, JsonRequestBehavior.AllowGet);
         }
-
+        public JsonResult GetPublishingHouses()
+        {
+            var items = _service.GetPublishingHouses();
+            return Json(items, JsonRequestBehavior.AllowGet);
+        }
         [HttpGet]
         public ActionResult Add()
         {
-            var view = new AddMagazineViewModel();
-            view.PublishingHouses = _publishingHouseRepository.Get().ToList();
-            return View(view);
+            return View();
         }
         [HttpPost]
         public ActionResult Add(AddMagazineViewModel view)
@@ -53,30 +47,16 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Magazine");
             }
-            var MagazineNew = new Magazine();
-
-            MagazineNew.MagazineNumber = view.MagazineNumber;
-            var publication = new Publication();
-            publication.Name = view.PublicationName;
-            publication.Type = PublicationType.Magazine;
-            MagazineNew.Publication = publication;
-            MagazineNew.PublicationDate = view.PublicationDate;
-            _publicationRepository.Insert(publication);
-            _publicationRepository.Save();
-            var publishingHouse = _publishingHouseRepository.GetByID(view.PublishingHousesId);
-            var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
-            x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
-            if (publicationInPublisihngHouseRepository == null)
-            {
-                var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
-                publicationInPublisihngHouse.Publication = publication;
-                publicationInPublisihngHouse.PublishingHouse = publishingHouse;
-                _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
-                _publicationInPublisihngHouseRepository.Save();
-            }
-            _magazineRepository.Insert(MagazineNew);
-            _magazineRepository.Save();
+            var publication = _service.InsertPablication(view);
+            _service.InsertMagazine(view, publication);
+            _service.InsertPublicationInPublisihngHouse(view, publication);
             return RedirectToAction("Index", "Magazine");
+        }
+
+        public JsonResult GetPublishingHousesForEdit(string id)
+        {
+            var distinctItems = _service.GetPublishingHousesForEdit(id);
+            return Json(distinctItems, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
         public ActionResult Edit(string id)
@@ -86,57 +66,41 @@ namespace Library.Web.Controllers
                 return RedirectToAction("Index", "Magazine");
             }
             var view = new EditMagazineViewModel();
-            view.PublishingHouses = _publishingHouseRepository.Get().ToList();
-            var Magazine = _magazineRepository.GetByID(id);
-            var publicationInPublisihngHouseRepositoryFirst = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == Magazine.Publication.Id).FirstOrDefault();
-            var PublishingHouseThisMagazine = publicationInPublisihngHouseRepositoryFirst.PublishingHouse;
-            view.PublishingHousesId = PublishingHouseThisMagazine.Id;
-            view.MagazineNumber = Magazine.MagazineNumber;
-            view.PublicationName = Magazine.Publication.Name;
-            view.PublicationDate = Magazine.PublicationDate;
+            var magazine = _service.GetMagazineById(id);
+            view.MagazineNumber = magazine.MagazineNumber;
+            view.PublicationDate = magazine.PublicationDate;
+            view.PublicationName = magazine.Publication.Name;
             return View(view);
         }
 
         [HttpPost]
         public ActionResult Edit(EditMagazineViewModel view)
         {
-            var Magazine = _magazineRepository.GetByID(view.Id);
-            Magazine.MagazineNumber = view.MagazineNumber;
-            Magazine.PublicationDate = view.PublicationDate;
-            var publication = _publicationRepository.GetByID(Magazine.Publication.Id);
-            publication.Name = view.PublicationName;
-            _publicationRepository.Update(publication);
-            _publicationRepository.Save();
-            var publicationInPublisihngHouseRepository = _publicationInPublisihngHouseRepository.Get().Where(x =>
-            x.Publication.Id == Magazine.Publication.Id && x.PublishingHouse.Id == view.PublishingHousesId).FirstOrDefault();
-            if (publicationInPublisihngHouseRepository == null)
+            var magazine = _service.UpdateMagazine(view);
+            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(magazine);
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            var idsNew = new List<string>();
+            for (int i = 0; i < subStrings.Length; i++)
             {
-                var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
-                publicationInPublisihngHouse.Publication = publication;
-                var publishingHouse = _publishingHouseRepository.GetByID(view.PublishingHousesId);
-                publicationInPublisihngHouse.PublishingHouse = publishingHouse;
-                _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
-                _publicationInPublisihngHouseRepository.Save();
-
+                idsNew.Add(subStrings[i]);
             }
-            _magazineRepository.Update(Magazine);
-            _magazineRepository.Save();
+            if (publisihngHouseIdsExist.Count == subStrings.Length)
+            {
+                return RedirectToAction("Index", "Magazine");
+            }
+            if (publisihngHouseIdsExist.Count > idsNew.Count)
+            {
+                _service.DeletePublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
+            }
+            if (publisihngHouseIdsExist.Count < idsNew.Count)
+            {
+                _service.AddPublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
+            }
             return RedirectToAction("Index", "Magazine");
         }
         public ActionResult Delete(string id)
         {
-            var Magazine = _magazineRepository.GetByID(id);
-            var publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get().Where(x => x.Publication.Id == Magazine.Publication.Id).ToList();
-            foreach (var publicationInPublisihngHouse in publicationInPublisihngHouses)
-            {
-                _publicationInPublisihngHouseRepository.Delete(publicationInPublisihngHouse.Id);
-                _publicationInPublisihngHouseRepository.Save();
-            }
-            _publicationRepository.Delete(Magazine.Publication.Id);
-            _publicationRepository.Save();
-
-            _magazineRepository.Delete(id);
-            _magazineRepository.Save();
+            _service.DeleteMagazine(id);
             return RedirectToAction("Index", "Magazine");
         }
     }

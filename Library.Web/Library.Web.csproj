@@ -229,8 +229,12 @@
     <Content Include="Scripts\App\Book\AddBook.js" />
     <Content Include="Scripts\App\Book\EditBook.js" />
     <Content Include="Scripts\App\Book\indexBook.js" />
+    <Content Include="Scripts\App\Brochure\AddBrochure.js" />
+    <Content Include="Scripts\App\Brochure\EditBrochure.js" />
     <Content Include="Scripts\App\Brochure\indexBrochure.js" />
     <Content Include="Scripts\App\Hotel\indexHome.js" />
+    <Content Include="Scripts\App\Magazine\AddMagazine.js" />
+    <Content Include="Scripts\App\Magazine\EditMagazine.js" />
     <Content Include="Scripts\App\Magazine\indexMagazine.js" />
     <Content Include="Scripts\App\PublishingHouse\indexPublishingHouse.js" />
     <Content Include="Scripts\bootstrap.js" />

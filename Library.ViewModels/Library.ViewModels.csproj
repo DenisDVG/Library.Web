@@ -43,16 +43,18 @@
   <ItemGroup>
     <Compile Include="BookViewModels\AddBookViewModel.cs" />
     <Compile Include="BookViewModels\EditBookViewModel.cs" />
-    <Compile Include="BookViewModels\GetBoksViewModel.cs" />
+    <Compile Include="BookViewModels\GetBooksViewModel.cs" />
     <Compile Include="BookViewModels\IndexBookViewModel.cs" />
     <Compile Include="BookViewModels\PublishingHousesVieModel.cs" />
     <Compile Include="BrochureViewModels\AddBrochureViewModel.cs" />
     <Compile Include="BrochureViewModels\EditBrochureViewModel.cs" />
+    <Compile Include="BrochureViewModels\GetBrochuresViewModel.cs" />
     <Compile Include="BrochureViewModels\IndexBrochureViewModel.cs" />
     <Compile Include="GetPublicationHotelViewModels.cs" />
     <Compile Include="MagazineViewModels\AddMagazineViewModel.cs" />
     <Compile Include="MagazineViewModels\EditMagazineViewModel.cs" />
     <Compile Include="MagazineViewModels\IndexMagazineViewModel.cs" />
+    <Compile Include="MagazineViewModels\GetMagazinesViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="PublishingHouseViewModels\AddPublishingHouseViewModel.cs" />
     <Compile Include="PublishingHouseViewModels\EditPublishingHouseViewModel.cs" />
