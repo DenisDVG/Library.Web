@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-
+    $("ul.nav-sidebar li").each(function () {
+        $(this).removeClass("active");
+    });
+    $("#publishingHouseActionLink").addClass("active");
 
     $("#MyGrid").kendoGrid({
         dataSource: {

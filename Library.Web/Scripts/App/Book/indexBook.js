@@ -1,5 +1,9 @@
 ﻿$(document).ready(function () {
 
+    $("ul.nav-sidebar li").each(function () {
+        $(this).removeClass("active");
+    });
+    $("#bookActionLink").addClass("active");
 
     $("#MyGrid").kendoGrid({
         dataSource: {
@@ -46,3 +50,15 @@
         }]
     });
 })
+
+
+
+
+
+//$("ul.nav-sidebar li").click(function () {
+//    alert("Handler for .click() called.");
+//    $("ul.nav-sidebar li").each(function () {
+//        $(this).removeClass("active");
+//    });
+//    $(this).addClass("active");
+//});

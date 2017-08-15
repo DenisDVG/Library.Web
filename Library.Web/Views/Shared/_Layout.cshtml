@@ -69,10 +69,10 @@
         <div class="row">
             <div class="col-sm-3 col-md-2 sidebar">
                 <ul class="nav nav-sidebar">
-                    <li class="active">@Html.ActionLink("Book", "Index", "Book")</li>
-                    <li>@Html.ActionLink("Magazine", "Index", "Magazine")</li>
-                    <li>@Html.ActionLink("Brochure", "Index", "Brochure")</li>
-                    <li>@Html.ActionLink("Publishing House", "Index", "PublishingHouse")</li>
+                    <li id="bookActionLink">@Html.ActionLink("Book", "Index", "Book")</li>
+                    <li id="magazineActionLink">@Html.ActionLink("Magazine", "Index", "Magazine")</li>
+                    <li id="brochureActionLink">@Html.ActionLink("Brochure", "Index", "Brochure")</li>
+                    <li id="publishingHouseActionLink">@Html.ActionLink("Publishing House", "Index", "PublishingHouse")</li>
                 </ul>
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
@@ -95,8 +95,8 @@
     <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="~/Scripts/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
     <script src="~/Scripts/ie10-viewport-bug-workaround.js"></script>
+    <script src="~/Scripts/App/Main/mainLayout.js"></script>
 </body>
 </html>
 

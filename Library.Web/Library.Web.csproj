@@ -236,6 +236,7 @@
     <Content Include="Scripts\App\Magazine\AddMagazine.js" />
     <Content Include="Scripts\App\Magazine\EditMagazine.js" />
     <Content Include="Scripts\App\Magazine\indexMagazine.js" />
+    <Content Include="Scripts\App\Main\mainLayout.js" />
     <Content Include="Scripts\App\PublishingHouse\indexPublishingHouse.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />

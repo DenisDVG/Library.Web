@@ -1,5 +1,8 @@
 ﻿    $(document).ready(function () {
-
+        $("ul.nav-sidebar li").each(function () {
+            $(this).removeClass("active");
+        });
+        $("#magazineActionLink").addClass("active");
 
         $("#MyGrid").kendoGrid({
             dataSource: {
@@ -46,3 +49,6 @@
             }]
         });
     })
+
+
+
