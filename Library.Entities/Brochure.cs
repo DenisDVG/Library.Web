@@ -9,7 +9,7 @@ namespace Library.Entities
 {
     public class Brochure : BaseEntity
     {
-        public int TomFiling { get; set; }
+        public int TomFilling { get; set; }
         public CoverType CoverType { get; set; }
         public string NumberPages { get; set; }
         public DateTime? PublishingYear { get; set; }
