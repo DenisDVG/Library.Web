@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Library.Entities
+namespace Library.DataEF.Repositories
 {
     public class BaseRepository<TEntity> where TEntity : class
     {

@@ -14,7 +14,6 @@ namespace Library.ViewModels.BookViewModels
         public string Id { get; set; }
         public string PublicationName { get; set; }
         public string PublishingHousesIds { get; set; }
-        public int TomNumber { get; set; }
         public string Author { get; set; }
         public string NumberPages { get; set; }
         public DateTime? PublishingYear { get; set; }

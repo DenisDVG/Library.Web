@@ -50,6 +50,7 @@
     <Compile Include="BrochureViewModels\EditBrochureViewModel.cs" />
     <Compile Include="BrochureViewModels\GetBrochuresViewModel.cs" />
     <Compile Include="BrochureViewModels\IndexBrochureViewModel.cs" />
+    <Compile Include="GeneralViewModel\AddGeneralViewModel.cs" />
     <Compile Include="GetPublicationHotelViewModels.cs" />
     <Compile Include="MagazineViewModels\AddMagazineViewModel.cs" />
     <Compile Include="MagazineViewModels\EditMagazineViewModel.cs" />

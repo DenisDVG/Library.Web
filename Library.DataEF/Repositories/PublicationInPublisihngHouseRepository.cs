@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Library.DataEF.Repositories
 {
-    public class PublicationInPublisihngHouseRepository : Entities.BaseRepository<PublicationInPublisihngHouse>
+    public class PublicationInPublisihngHouseRepository : BaseRepository<PublicationInPublisihngHouse>
     {
         public PublicationInPublisihngHouseRepository(ApplicationContext context)
             : base(context)
