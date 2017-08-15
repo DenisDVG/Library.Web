@@ -315,7 +315,7 @@
     <Content Include="Views\PublishingHouse\Index.cshtml" />
     <Content Include="Views\PublishingHouse\Add.cshtml" />
     <Content Include="Views\PublishingHouse\Edit.cshtml" />
-    <Content Include="Views\GeneralController\Add.cshtml" />
+    <Content Include="Views\General\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

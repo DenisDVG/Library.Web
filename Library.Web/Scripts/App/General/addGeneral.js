@@ -4,6 +4,15 @@
         $(this).removeClass("active");
     });
     $("#generalActionLink").addClass("active");
+    $(".bookShow").each(function () {
+        $(this).hide();
+    });
+    $(".brochureShow").each(function () {
+        $(this).hide();
+    });
+    $(".magazineShow").each(function () {
+        $(this).hide();
+    });
 
     $("#PublishingHousesIds").val("Error");
     $("#orders").kendoMultiSelect({
@@ -54,6 +63,55 @@
         $("#PublishingHousesIds").val(iDs);
     });
 
+        $("#orders").change(function () {
+        var multiselect = $("#orders").data("kendoMultiSelect");
+        var dataItem = multiselect.dataItems();
+        var iDs = [];
+        for (var i = 0; i < dataItem.length; i++) {
+            iDs.push(dataItem[i].Id);
+        }
+        console.log(iDs);
+        $("#PublishingHousesIds").val(iDs);
+    });
+        $("#typePublication").change(function () {
 
+            if ($("#typePublication").val() == "1") // Book
+            {
+                $(".brochureShow").each(function () {
+                    $(this).hide();
+                });
+                $(".magazineShow").each(function () {
+                    $(this).hide();
+                });
+                $(".bookShow").each(function () {
+                    $(this).show();
+                });
+
+            }
+            if ($("#typePublication").val() == "2") // Magazine
+            {
+                $(".bookShow").each(function () {
+                    $(this).hide();
+                });
+                $(".brochureShow").each(function () {
+                    $(this).hide();
+                });
+                $(".magazineShow").each(function () {
+                    $(this).show();
+                });
+            }
+            if ($("#typePublication").val() == "3") // Brochure
+            {
+                $(".bookShow").each(function () {
+                    $(this).hide();
+                });
+                $(".magazineShow").each(function () {
+                    $(this).hide();
+                });
+                $(".brochureShow").each(function () {
+                    $(this).show();
+                });
+            }
+        });
 
 })

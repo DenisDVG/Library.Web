@@ -61,7 +61,7 @@ namespace Library.Services
             BrochureNew.NumberPages = view.NumberPages;
             BrochureNew.Publication = publication;
             BrochureNew.PublishingYear = view.PublishingYear;
-            BrochureNew.TomFiling = view.TomFiling;
+            BrochureNew.TomFilling = view.TomFiling;
             _brochureRepository.Insert(BrochureNew);
             _brochureRepository.Save();
         }
@@ -111,7 +111,7 @@ namespace Library.Services
         public Brochure UpdateBrochure(EditBrochureViewModel view)
         {
             var Brochure = GetBrochureById(view.Id);
-            Brochure.TomFiling = view.TomFiling;
+            Brochure.TomFilling = view.TomFiling;
             Brochure.CoverType = view.CoverType;
             Brochure.NumberPages = view.NumberPages;
             Brochure.PublishingYear = view.PublishingYear;

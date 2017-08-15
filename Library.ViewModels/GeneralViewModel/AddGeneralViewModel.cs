@@ -12,6 +12,7 @@ namespace Library.ViewModels.GeneralViewModel
         public string Id { get; set; }
         public string PublicationName { get; set; }
         public string PublishingHousesIds { get; set; }
+        public PublicationType Type { get; set; }
         // Book
         public int TomNumber { get; set; }
         public string Author { get; set; }
