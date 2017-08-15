@@ -79,7 +79,7 @@ namespace Library.Web.Controllers
         public ActionResult Edit(EditBookViewModel view)
         {
             var book = _service.UpdateBook(view);
-            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(book.Id);
+            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(book);
             string[] subStrings = view.PublishingHousesIds.Split(',');
             var idsNew = new List<string>();
             for (int i = 0; i < subStrings.Length; i++)

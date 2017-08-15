@@ -94,12 +94,11 @@ namespace Library.Services
             var distinctItems = books.GroupBy(x => x.Id).Select(y => y.First()).ToList();
             return distinctItems;
         }
-        public List<string> GetPublishingHousesForEditExistId(string id)
+        public List<string> GetPublishingHousesForEditExistId(Book book)
         {
-            var book = GetBookById(id);
             var publicationInPublisihngHouseRepositories = _publicationInPublisihngHouses.Where(x => x.Publication.Id == book.Publication.Id).ToList();
-            var books = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => x.Id = x.PublishingHouse.Id).ToList();
-            var distinctItems = books.GroupBy(x => x).Select(y => y.First()).ToList();
+            var ids = publicationInPublisihngHouseRepositories.Where(x => x.PublishingHouse != null).Select(x => x.PublishingHouse.Id).ToList();
+            var distinctItems = ids.GroupBy(x => x).Select(y => y.First()).ToList();
             var stringItem = new List<string>();
             foreach (var distinctItem in distinctItems)
             {
