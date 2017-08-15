@@ -59,7 +59,6 @@ namespace Library.Services
             bookNew.NumberPages = view.NumberPages;
             bookNew.Publication = publication;
             bookNew.PublishingYear = view.PublishingYear;
-            bookNew.TomNumber = view.TomNumber;
             _bookRepository.Insert(bookNew);
             _bookRepository.Save();
         }
@@ -110,7 +109,6 @@ namespace Library.Services
         {
             var book = GetBookById(view.Id);
             book.Author = view.Author;
-            book.TomNumber = view.TomNumber;
             book.NumberPages = view.NumberPages;
             book.PublishingYear = view.PublishingYear;
             var publication = _publications.Where(x => x.Id == book.Publication.Id).FirstOrDefault();

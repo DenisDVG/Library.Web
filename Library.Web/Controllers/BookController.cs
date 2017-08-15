@@ -71,7 +71,6 @@ namespace Library.Web.Controllers
             view.NumberPages = book.NumberPages;
             view.PublicationName = book.Publication.Name;
             view.PublishingYear = book.PublishingYear;
-            view.TomNumber = book.TomNumber;
             return View(view);
         }
 

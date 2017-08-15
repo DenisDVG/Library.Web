@@ -198,6 +198,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BookController.cs" />
     <Compile Include="Controllers\BrochureController.cs" />
+    <Compile Include="Controllers\GeneralController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MagazineController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -232,6 +233,7 @@
     <Content Include="Scripts\App\Brochure\AddBrochure.js" />
     <Content Include="Scripts\App\Brochure\EditBrochure.js" />
     <Content Include="Scripts\App\Brochure\indexBrochure.js" />
+    <Content Include="Scripts\App\General\addGeneral.js" />
     <Content Include="Scripts\App\Hotel\indexHome.js" />
     <Content Include="Scripts\App\Magazine\AddMagazine.js" />
     <Content Include="Scripts\App\Magazine\EditMagazine.js" />
@@ -313,6 +315,7 @@
     <Content Include="Views\PublishingHouse\Index.cshtml" />
     <Content Include="Views\PublishingHouse\Add.cshtml" />
     <Content Include="Views\PublishingHouse\Edit.cshtml" />
+    <Content Include="Views\GeneralController\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

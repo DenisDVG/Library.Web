@@ -50,7 +50,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseEntity.cs" />
-    <Compile Include="BaseRepository.cs" />
     <Compile Include="Book.cs" />
     <Compile Include="Brochure.cs" />
     <Compile Include="Enums\CoverType.cs" />

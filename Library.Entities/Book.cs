@@ -9,7 +9,6 @@ namespace Library.Entities
 {
     public class Book : BaseEntity
     {
-        public int TomNumber { get; set; }
         public string Author { get; set; }
         public string NumberPages { get; set; }
         public DateTime? PublishingYear { get; set; }

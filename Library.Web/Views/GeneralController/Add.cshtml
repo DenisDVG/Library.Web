@@ -1,0 +1,149 @@
+﻿@model Library.ViewModels.GeneralViewModel.AddGeneralViewModel
+@{
+    ViewBag.Title = "Add";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1 class="page-header">Add Publication</h1>
+
+<div class="row placeholders">
+    @using (Html.BeginForm())
+    {
+        <p style="padding:5px;"></p>
+        <div class="col-xs-12 col-sm-2">
+        </div>
+            <div class="col-xs-12 col-sm-9">
+                <form class="form-horizontal" role="form">
+
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="category" class="col-sm-3 control-label">Name</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublicationName, new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNameAdd" class="col-sm-3 control-label">Publishing Houses</label>
+                            <div class="col-sm-6">
+                                @*@Html.DropDownListFor(m => m.PublishingHousesId, Model.PublishingHouses.Select(x => new SelectListItem() { Text = x.Name, Value = x.Id }).ToList(), new { @class = "form-control" })*@
+                                <select id="orders" style="width: 400px;"></select>
+                                @Html.TextBoxFor(x => x.PublishingHousesIds, new { @class = "form-control hidden", required = "required", @id = "PublishingHousesIds" })
+                            </div>
+                        </div>
+                    </div>
+
+                    @*Book start*@
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Author</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.Author, new { @class = "form-control", required = "required" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Number Pages</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.NumberPages, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Publishing Year</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublishingYear, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy" })
+                            </div>
+                        </div>
+                    </div>
+                    @*Book end*@
+
+                    @*Brochure start*@
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Tom Filing</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.TomFiling, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">CoverType</label>
+                            <div class="col-sm-6">
+                                @Html.EnumDropDownListFor(m => m.CoverType, new { @class = "form-control" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Number Pages</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.NumberPages, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Publishing Year</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublishingYear, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy" })
+                            </div>
+                        </div>
+                    </div>*@
+                    @*Brochure end*@
+
+                    @*Magazine start*@
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Magazine Number</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.MagazineNumber, new { @class = "form-control", required = "required", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p style="padding:5px;"></p>
+                        <div class="form-group">
+                            <label for="categoryNumberAdd" class="col-sm-3 control-label">Publication Date</label>
+                            <div class="col-sm-6">
+                                @Html.TextBoxFor(x => x.PublicationDate, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy" })
+                            </div>
+                        </div>
+                    </div>
+                    @*Magazine end*@
+                    <div class="row">
+                        <p style="padding:10px;"></p>
+                        <div class="form-group">
+                            <div class="col-sm-3">
+                            </div>
+
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-warning">Add Publication</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+
+    }
+
+</div>
+<script src="~/Scripts/App/General/addGeneral.js"></script>
