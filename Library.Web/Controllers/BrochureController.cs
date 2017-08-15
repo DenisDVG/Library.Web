@@ -71,7 +71,7 @@ namespace Library.Web.Controllers
             view.NumberPages = brochure.NumberPages;
             view.PublicationName = brochure.Publication.Name;
             view.PublishingYear = brochure.PublishingYear;
-            view.TomFiling = brochure.TomFilling;
+            view.TomFilling = brochure.TomFilling;
             return View(view);
         }
 

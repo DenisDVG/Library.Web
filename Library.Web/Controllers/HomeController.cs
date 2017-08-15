@@ -1,6 +1,7 @@
 ﻿using Library.DataEF;
 using Library.DataEF.Repositories;
 using Library.Entities;
+using Library.Services;
 using Library.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -12,16 +13,10 @@ namespace Library.Web.Controllers
 {
     public class HomeController : Controller
     {
-        ApplicationContext _applicationContext;
-        BookRepository _bookRepository;
-        MagazineRepository _magazineRepository;
-        BrochureRepository _brochureRepository;
+        HomeService _homeService;
         public HomeController()
         {
-            _applicationContext = new ApplicationContext();
-            _bookRepository = new BookRepository(_applicationContext);
-            _magazineRepository = new MagazineRepository(_applicationContext);
-            _brochureRepository = new BrochureRepository(_applicationContext);
+            _homeService = new HomeService();
 
         }
         public ActionResult Index()
@@ -44,30 +39,9 @@ namespace Library.Web.Controllers
         }
 
         public JsonResult GetPublications()
-        {
-            var books = _bookRepository.Get().Select(x => new GetPublicationHotelViewModels()
-            {
-                Id = x.Id,
-                Name = x.Publication.Name,
-                Type = x.Publication.Type.ToString()
-            }).ToList();
-            var magazines = _magazineRepository.Get().Select(x => new GetPublicationHotelViewModels()
-            {
-                Id = x.Id,
-                Name = x.Publication.Name,
-                Type = x.Publication.Type.ToString()
-            }).ToList();
-            var brochures = _brochureRepository.Get().Select(x => new GetPublicationHotelViewModels()
-            {
-                Id = x.Id,
-                Name = x.Publication.Name,
-                Type = x.Publication.Type.ToString()
-            }).ToList();
-            var publications = new List<GetPublicationHotelViewModels>();
-            publications.AddRange(books);
-            publications.AddRange(magazines);
-            publications.AddRange(brochures);
-            return Json(publications, JsonRequestBehavior.AllowGet);
+        {            
+            var publicationList = _homeService.GetAllPublications();
+            return Json(publicationList, JsonRequestBehavior.AllowGet);
         }
 
     }

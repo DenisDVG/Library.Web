@@ -73,8 +73,8 @@ namespace Library.Services
                 }
                 var publishingHouse = _publishingHouses.Where(x => x.Id == subString).FirstOrDefault();
                 var publicationInPublisihngHouseRepository = _publicationInPublisihngHouses.Where(x =>
-                x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
-                if (publicationInPublisihngHouseRepository == null)
+                x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).Any();
+                if (!publicationInPublisihngHouseRepository)
                 {
                     var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
                     publicationInPublisihngHouse.Publication = publication;
