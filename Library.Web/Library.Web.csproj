@@ -328,6 +328,10 @@
       <Project>{F871B072-DAD2-4E85-B2E0-F949CA0A6B4A}</Project>
       <Name>Library.Entities</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Library.Services\Library.Services.csproj">
+      <Project>{3C385BDD-0AC8-46A7-80B8-8D4069721268}</Project>
+      <Name>Library.Services</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Library.ViewModels\Library.ViewModels.csproj">
       <Project>{511e038e-5684-475b-8532-024042288db5}</Project>
       <Name>Library.ViewModels</Name>

@@ -43,7 +43,9 @@
   <ItemGroup>
     <Compile Include="BookViewModels\AddBookViewModel.cs" />
     <Compile Include="BookViewModels\EditBookViewModel.cs" />
+    <Compile Include="BookViewModels\GetBoksViewModel.cs" />
     <Compile Include="BookViewModels\IndexBookViewModel.cs" />
+    <Compile Include="BookViewModels\PublishingHousesVieModel.cs" />
     <Compile Include="BrochureViewModels\AddBrochureViewModel.cs" />
     <Compile Include="BrochureViewModels\EditBrochureViewModel.cs" />
     <Compile Include="BrochureViewModels\IndexBrochureViewModel.cs" />
