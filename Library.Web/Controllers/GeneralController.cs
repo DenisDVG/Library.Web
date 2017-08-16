@@ -42,13 +42,21 @@ namespace Library.Web.Controllers
         {
             if (view == null)
             {
-                return RedirectToAction("Add", "General");
+                return RedirectToAction("Index", "General");
             }
             if(view.Type == PublicationType.Book)
             {
                 _service.AddBook(view);
             }
-            return RedirectToAction("Add", "General");
+            if (view.Type == PublicationType.Brochure)
+            {
+                _service.AddBook(view);
+            }
+            if (view.Type == PublicationType.Magazine)
+            {
+                _service.AddMagazine(view);
+            }
+            return RedirectToAction("Index", "General");
         }
     }
 }

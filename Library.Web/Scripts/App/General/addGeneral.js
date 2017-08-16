@@ -63,7 +63,7 @@
         $("#PublishingHousesIds").val(iDs);
     });
 
-        $("#orders").change(function () {
+    $("#orders").change(function () {
         var multiselect = $("#orders").data("kendoMultiSelect");
         var dataItem = multiselect.dataItems();
         var iDs = [];
@@ -73,9 +73,9 @@
         console.log(iDs);
         $("#PublishingHousesIds").val(iDs);
     });
-        $("#typePublication").change(function () {
-            setShowInputs();
-        });
+    $("#typePublication").change(function () {
+        setShowInputs();
+    });
 
 })
 
@@ -85,36 +85,44 @@ function setShowInputs() {
     {
         $(".brochureShow").each(function () {
             $(this).hide();
+            $(this).removeAttr("required");
         });
         $(".magazineShow").each(function () {
             $(this).hide();
+            $(this).removeAttr("required");
         });
         $(".bookShow").each(function () {
+            $(this).attr('required', 'required');
             $(this).show();
         });
-
     }
     if ($("#typePublication").val() == "2") // Magazine
     {
         $(".bookShow").each(function () {
+            $(this).removeAttr("required");
             $(this).hide();
         });
         $(".brochureShow").each(function () {
+            $(this).removeAttr("required");
             $(this).hide();
         });
         $(".magazineShow").each(function () {
+            $(this).attr('required', 'required');
             $(this).show();
         });
     }
     if ($("#typePublication").val() == "3") // Brochure
     {
         $(".bookShow").each(function () {
+            $(this).removeAttr("required");
             $(this).hide();
         });
         $(".magazineShow").each(function () {
+            $(this).removeAttr("required");
             $(this).hide();
         });
         $(".brochureShow").each(function () {
+            $(this).attr('required', 'required');
             $(this).show();
         });
     }
@@ -123,7 +131,7 @@ function setShowInputs() {
 function fillFilds() {
 
     $("input:text").each(function () {
-        $(this).val("");
+        $(this).val(" ");
     });
     $("input[type=number]").each(function () {
         $(this).val(0);

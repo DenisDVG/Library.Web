@@ -15,29 +15,29 @@ namespace Library.Services
     public class MagazineService
     {
         ApplicationContext _applicationContext;
-        MagazineRepository _MagazineRepository;
+        MagazineRepository _magazineRepository;
         PublishingHouseRepository _publishingHouseRepository;
         PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
         PublicationRepository _publicationRepository;
         List<PublicationInPublisihngHouse> _publicationInPublisihngHouses;
-        List<Magazine> _Magazines;
+        List<Magazine> _magazines;
         List<PublishingHouse> _publishingHouses;
         List<Publication> _publications;
         public MagazineService()
         {
             _applicationContext = new ApplicationContext();
-            _MagazineRepository = new MagazineRepository(_applicationContext);
+            _magazineRepository = new MagazineRepository(_applicationContext);
             _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
             _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
             _publicationRepository = new PublicationRepository(_applicationContext);
             _publicationInPublisihngHouses = _publicationInPublisihngHouseRepository.Get(/*includeProperties: "PublishingHouse, Publication"*/).ToList();
-            _Magazines = _MagazineRepository.Get(includeProperties: "Publication").ToList();
+            _magazines = _magazineRepository.Get(includeProperties: "Publication").ToList();
             _publishingHouses = _publishingHouseRepository.Get().ToList();
             _publications = _publicationRepository.Get().ToList();
         }
         public List<GetMagazinesViewModel> GetMagazines()
         {
-            return _Magazines.Select(x => new GetMagazinesViewModel { Id = x.Id, Type = PublicationType.Magazine.ToString(), Name = x.Publication.Name, MagazineNumber = x.MagazineNumber.ToString() }).ToList();
+            return _magazines.Select(x => new GetMagazinesViewModel { Id = x.Id, Type = PublicationType.Magazine.ToString(), Name = x.Publication.Name, MagazineNumber = x.MagazineNumber.ToString() }).ToList();
 
         }
         public List<PublishingHousesVieModel> GetPublishingHouses()
@@ -59,8 +59,8 @@ namespace Library.Services
             MagazineNew.MagazineNumber = view.MagazineNumber;
             MagazineNew.PublicationDate = view.PublicationDate;
             MagazineNew.Publication = publication;
-            _MagazineRepository.Insert(MagazineNew);
-            _MagazineRepository.Save();
+            _magazineRepository.Insert(MagazineNew);
+            _magazineRepository.Save();
         }
         public void InsertPublicationInPublisihngHouse(AddMagazineViewModel view, Publication publication)
         {
@@ -114,8 +114,8 @@ namespace Library.Services
             publication.Name = view.PublicationName;
             _publicationRepository.Update(publication);
             _publicationRepository.Save();
-            _MagazineRepository.Update(Magazine);
-            _MagazineRepository.Save();
+            _magazineRepository.Update(Magazine);
+            _magazineRepository.Save();
             return Magazine;
         }
         public void AddPublicationInPublisihngHouses(Magazine Magazine, List<string> publisihngHouseIdsExist, List<string> idsNew)
@@ -189,12 +189,12 @@ namespace Library.Services
             _publicationRepository.Delete(Magazine.Publication.Id);
             _publicationRepository.Save();
 
-            _MagazineRepository.Delete(id);
-            _MagazineRepository.Save();
+            _magazineRepository.Delete(id);
+            _magazineRepository.Save();
         }
         public Magazine GetMagazineById(string id)
         {
-            return _Magazines.Where(x => x.Id == id).FirstOrDefault();
+            return _magazines.Where(x => x.Id == id).FirstOrDefault();
 
         }
     }

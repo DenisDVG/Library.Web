@@ -5,6 +5,7 @@ using Library.Entities.Enums;
 using Library.ViewModels;
 using Library.ViewModels.BookViewModels;
 using Library.ViewModels.GeneralViewModel;
+using Library.ViewModels.MagazineViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,7 @@ namespace Library.Services
     {
         ApplicationContext _applicationContext;
         BookRepository _bookRepository;
+        MagazineRepository _magazineRepository;
         PublishingHouseRepository _publishingHouseRepository;
         PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
         PublicationRepository _publicationRepository;
@@ -28,6 +30,7 @@ namespace Library.Services
         {
             _applicationContext = new ApplicationContext();
             _bookRepository = new BookRepository(_applicationContext);
+            _magazineRepository = new MagazineRepository(_applicationContext);
             _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
             _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
             _publicationRepository = new PublicationRepository(_applicationContext);
@@ -69,6 +72,59 @@ namespace Library.Services
             var publication = InsertPablication(addBookViewModel);
             InsertBook(addBookViewModel, publication);
             InsertPublicationInPublisihngHouse(addBookViewModel, publication);
+        }
+        public void AddMagazine(AddGeneralViewModel view)
+        {
+            var addMagazineViewModel = new AddMagazineViewModel();
+            addMagazineViewModel.MagazineNumber = view.MagazineNumber;
+            addMagazineViewModel.PublicationDate = view.PublicationDate;
+            addMagazineViewModel.PublicationName = view.PublicationName;
+            addMagazineViewModel.PublishingHousesIds = view.PublishingHousesIds;
+
+            var publication = InsertPablication(addMagazineViewModel);
+            InsertMagazine(addMagazineViewModel, publication);
+            InsertPublicationInPublisihngHouse(addMagazineViewModel, publication);
+        }
+        public Publication InsertPablication(AddMagazineViewModel view)
+        {
+            var publication = new Publication();
+            publication.Name = view.PublicationName;
+            publication.Type = PublicationType.Magazine;
+            _publicationRepository.Insert(publication);
+            _publicationRepository.Save();
+            return publication;
+        }
+        public void InsertMagazine(AddMagazineViewModel view, Publication publication)
+        {
+            var MagazineNew = new Magazine();
+            MagazineNew.MagazineNumber = view.MagazineNumber;
+            MagazineNew.MagazineNumber = view.MagazineNumber;
+            MagazineNew.PublicationDate = view.PublicationDate;
+            MagazineNew.Publication = publication;
+            _magazineRepository.Insert(MagazineNew);
+            _magazineRepository.Save();
+        }
+        public void InsertPublicationInPublisihngHouse(AddMagazineViewModel view, Publication publication)
+        {
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            foreach (var subString in subStrings)
+            {
+                if (subString == Errors.Error.ToString())
+                {
+                    continue;
+                }
+                var publishingHouse = _publishingHouses.Where(x => x.Id == subString).FirstOrDefault();
+                var publicationInPublisihngHouseRepository = _publicationInPublisihngHouses.Where(x =>
+                x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
+                if (publicationInPublisihngHouseRepository == null)
+                {
+                    var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
+                    publicationInPublisihngHouse.Publication = publication;
+                    publicationInPublisihngHouse.PublishingHouse = publishingHouse;
+                    _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
+                    _publicationInPublisihngHouseRepository.Save();
+                }
+            }
         }
         public void InsertBook(AddBookViewModel view, Publication publication)
         {
