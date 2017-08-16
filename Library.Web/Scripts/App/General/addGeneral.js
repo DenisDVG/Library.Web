@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-
+    fillFilds();
     $("ul.nav-sidebar li").each(function () {
         $(this).removeClass("active");
     });
@@ -74,44 +74,63 @@
         $("#PublishingHousesIds").val(iDs);
     });
         $("#typePublication").change(function () {
-
-            if ($("#typePublication").val() == "1") // Book
-            {
-                $(".brochureShow").each(function () {
-                    $(this).hide();
-                });
-                $(".magazineShow").each(function () {
-                    $(this).hide();
-                });
-                $(".bookShow").each(function () {
-                    $(this).show();
-                });
-
-            }
-            if ($("#typePublication").val() == "2") // Magazine
-            {
-                $(".bookShow").each(function () {
-                    $(this).hide();
-                });
-                $(".brochureShow").each(function () {
-                    $(this).hide();
-                });
-                $(".magazineShow").each(function () {
-                    $(this).show();
-                });
-            }
-            if ($("#typePublication").val() == "3") // Brochure
-            {
-                $(".bookShow").each(function () {
-                    $(this).hide();
-                });
-                $(".magazineShow").each(function () {
-                    $(this).hide();
-                });
-                $(".brochureShow").each(function () {
-                    $(this).show();
-                });
-            }
+            setShowInputs();
         });
 
 })
+
+
+function setShowInputs() {
+    if ($("#typePublication").val() == "1") // Book
+    {
+        $(".brochureShow").each(function () {
+            $(this).hide();
+        });
+        $(".magazineShow").each(function () {
+            $(this).hide();
+        });
+        $(".bookShow").each(function () {
+            $(this).show();
+        });
+
+    }
+    if ($("#typePublication").val() == "2") // Magazine
+    {
+        $(".bookShow").each(function () {
+            $(this).hide();
+        });
+        $(".brochureShow").each(function () {
+            $(this).hide();
+        });
+        $(".magazineShow").each(function () {
+            $(this).show();
+        });
+    }
+    if ($("#typePublication").val() == "3") // Brochure
+    {
+        $(".bookShow").each(function () {
+            $(this).hide();
+        });
+        $(".magazineShow").each(function () {
+            $(this).hide();
+        });
+        $(".brochureShow").each(function () {
+            $(this).show();
+        });
+    }
+}
+
+function fillFilds() {
+
+    $("input:text").each(function () {
+        $(this).val("");
+    });
+    $("input[type=number]").each(function () {
+        $(this).val(0);
+    });
+    var currdate = new Date();
+    var currdate = (currdate.getMonth() + 1) + '/' + currdate.getDate() + '/' + currdate.getFullYear();
+    $("#PublishingYear").val(currdate);
+    $("#PublicationDate").val(currdate);
+
+}

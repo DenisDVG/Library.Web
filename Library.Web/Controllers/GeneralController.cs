@@ -1,4 +1,7 @@
-﻿using Library.Services;
+﻿using Library.Entities.Enums;
+using Library.Services;
+using Library.ViewModels.BookViewModels;
+using Library.ViewModels.GeneralViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +17,11 @@ namespace Library.Web.Controllers
         {
             _service = new GeneralService();
         }
+        public JsonResult GetPublications()
+        {
+            var publicationList = _service.GetAllPublications();
+            return Json(publicationList, JsonRequestBehavior.AllowGet);
+        }
         // GET: GeneralController
         public ActionResult Index()
         {
@@ -28,6 +36,19 @@ namespace Library.Web.Controllers
         public ActionResult Add()
         {
             return View();
+        }
+        [HttpPost]
+        public ActionResult Add(AddGeneralViewModel view)
+        {
+            if (view == null)
+            {
+                return RedirectToAction("Add", "General");
+            }
+            if(view.Type == PublicationType.Book)
+            {
+                _service.AddBook(view);
+            }
+            return RedirectToAction("Add", "General");
         }
     }
 }

@@ -234,6 +234,7 @@
     <Content Include="Scripts\App\Brochure\EditBrochure.js" />
     <Content Include="Scripts\App\Brochure\indexBrochure.js" />
     <Content Include="Scripts\App\General\addGeneral.js" />
+    <Content Include="Scripts\App\General\indexGeneral.js" />
     <Content Include="Scripts\App\Hotel\indexHome.js" />
     <Content Include="Scripts\App\Magazine\AddMagazine.js" />
     <Content Include="Scripts\App\Magazine\EditMagazine.js" />
@@ -318,6 +319,7 @@
     <Content Include="Views\PublishingHouse\Add.cshtml" />
     <Content Include="Views\PublishingHouse\Edit.cshtml" />
     <Content Include="Views\General\Add.cshtml" />
+    <Content Include="Views\General\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,0 +1,27 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="page-header">Publications</h1>
+
+<div class="row placeholders">
+    <div class="col-xs-6 col-sm-3 placeholder">
+        <a href="@Url.Action("Add", "General")" class="btn btn-primary" id="myMarginLeft">Add New Publication</a>
+    </div>
+
+
+</div>
+<div class="row">
+    <div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-8 col-sm-offset-2">
+                <div class="form-group text-center">
+                    <div class="col-xs-12" id="MyGrid" style="width:100%">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/App/General/indexGeneral.js"></script>
+
