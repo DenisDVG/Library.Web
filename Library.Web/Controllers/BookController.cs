@@ -12,7 +12,7 @@ using System.Web.Mvc;
 
 namespace Library.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin")]
     public class BookController : Controller
     {
         BookService _service;

@@ -55,6 +55,7 @@
     <Compile Include="Enums\CoverType.cs" />
     <Compile Include="Enums\Errors.cs" />
     <Compile Include="Enums\PublicationType.cs" />
+    <Compile Include="Enums\UserRoles.cs" />
     <Compile Include="Magazine.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Publication.cs" />

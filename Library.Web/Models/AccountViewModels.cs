@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Library.Entities.Enums;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Library.Web.Models
@@ -64,6 +65,9 @@ namespace Library.Web.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "UserRoles")]
+        public UserRoles UserRoles { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
