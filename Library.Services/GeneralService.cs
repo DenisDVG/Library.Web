@@ -4,6 +4,7 @@ using Library.Entities;
 using Library.Entities.Enums;
 using Library.ViewModels;
 using Library.ViewModels.BookViewModels;
+using Library.ViewModels.BrochureViewModels;
 using Library.ViewModels.GeneralViewModel;
 using Library.ViewModels.MagazineViewModels;
 using System;
@@ -18,6 +19,7 @@ namespace Library.Services
     {
         ApplicationContext _applicationContext;
         BookRepository _bookRepository;
+        BrochureRepository _brochureRepository;
         MagazineRepository _magazineRepository;
         PublishingHouseRepository _publishingHouseRepository;
         PublicationInPublisihngHouseRepository _publicationInPublisihngHouseRepository;
@@ -31,6 +33,7 @@ namespace Library.Services
             _applicationContext = new ApplicationContext();
             _bookRepository = new BookRepository(_applicationContext);
             _magazineRepository = new MagazineRepository(_applicationContext);
+            _brochureRepository = new BrochureRepository(_applicationContext);
             _publishingHouseRepository = new PublishingHouseRepository(_applicationContext);
             _publicationInPublisihngHouseRepository = new PublicationInPublisihngHouseRepository(_applicationContext);
             _publicationRepository = new PublicationRepository(_applicationContext);
@@ -84,6 +87,61 @@ namespace Library.Services
             var publication = InsertPablication(addMagazineViewModel);
             InsertMagazine(addMagazineViewModel, publication);
             InsertPublicationInPublisihngHouse(addMagazineViewModel, publication);
+        }
+        public void AddBrochure(AddGeneralViewModel view)
+        {
+            var addBrochureViewModel = new AddBrochureViewModel();
+            addBrochureViewModel.CoverType = view.CoverType;
+            addBrochureViewModel.NumberPages = view.NumberPages;
+            addBrochureViewModel.PublicationName = view.PublicationName;
+            addBrochureViewModel.PublishingHousesIds = view.PublishingHousesIds;
+            addBrochureViewModel.PublishingYear = view.PublishingYear;
+            addBrochureViewModel.TomFilling = view.TomNumber;
+            var publication = InsertPablication(addBrochureViewModel);
+            InsertBrochure(addBrochureViewModel, publication);
+            InsertPublicationInPublisihngHouse(addBrochureViewModel, publication);
+        }
+        public Publication InsertPablication(AddBrochureViewModel view)
+        {
+            var publication = new Publication();
+            publication.Name = view.PublicationName;
+            publication.Type = PublicationType.Brochure;
+            _publicationRepository.Insert(publication);
+            _publicationRepository.Save();
+            return publication;
+        }
+        public void InsertBrochure(AddBrochureViewModel view, Publication publication)
+        {
+            var BrochureNew = new Brochure();
+            BrochureNew.CoverType = view.CoverType;
+            BrochureNew.NumberPages = view.NumberPages;
+            BrochureNew.Publication = publication;
+            BrochureNew.PublishingYear = view.PublishingYear;
+            BrochureNew.TomFilling = view.TomFilling;
+            _brochureRepository.Insert(BrochureNew);
+            _brochureRepository.Save();
+        }
+        public void InsertPublicationInPublisihngHouse(AddBrochureViewModel view, Publication publication)
+        {
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            foreach (var subString in subStrings)
+            {
+                if (subString == Errors.Error.ToString())
+                {
+                    continue;
+                }
+                var publishingHouse = _publishingHouses.Where(x => x.Id == subString).FirstOrDefault();
+                var publicationInPublisihngHouseRepository = _publicationInPublisihngHouses.Where(x =>
+                x.Publication.Id == publication.Id && x.PublishingHouse.Id == publishingHouse.Id).FirstOrDefault();
+                if (publicationInPublisihngHouseRepository == null)
+                {
+                    var publicationInPublisihngHouse = new PublicationInPublisihngHouse();
+                    publicationInPublisihngHouse.Publication = publication;
+                    publicationInPublisihngHouse.PublishingHouse = publishingHouse;
+                    _publicationInPublisihngHouseRepository.Insert(publicationInPublisihngHouse);
+                    _publicationInPublisihngHouseRepository.Save();
+                }
+            }
         }
         public Publication InsertPablication(AddMagazineViewModel view)
         {

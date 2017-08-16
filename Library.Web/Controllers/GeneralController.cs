@@ -50,7 +50,7 @@ namespace Library.Web.Controllers
             }
             if (view.Type == PublicationType.Brochure)
             {
-                _service.AddBook(view);
+                _service.AddBrochure(view);
             }
             if (view.Type == PublicationType.Magazine)
             {
