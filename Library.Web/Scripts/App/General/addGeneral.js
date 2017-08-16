@@ -1,8 +1,32 @@
 ﻿$(document).ready(function () {
+
     fillFilds();
     $("ul.nav-sidebar li").each(function () {
         $(this).removeClass("active");
     });
+    var lementsLi = document.querySelectorAll('ul.nav-sidebar li');
+    var listOfObjectsElementClass = [];
+
+    function elementClass()
+    {
+        this.baseURI;
+        this.clientHeight;
+    }
+    function elementClassProto() {
+        this.clientHeight;
+    }
+    elementClass.prototype.__proto__ = elementClassProto;
+
+    for (var lementLi in lementsLi) {
+        if (!lementsLi.hasOwnProperty(lementLi)) {
+            continue;
+        }
+        var elementClassItem = new elementClass();
+        elementClassItem.baseURI = lementsLi[lementLi].baseURI;
+        elementClassItem.clientHeight = lementsLi[lementLi].clientHeight;
+        listOfObjectsElementClass.push(elementClassItem);
+    }
+
     $("#generalActionLink").addClass("active");
     $(".bookShow").each(function () {
         $(this).hide();
@@ -79,6 +103,11 @@
 
 })
 
+function validete() {
+    var isPublishingYear = isYearofBirthValid($("#PublishingYear").val());
+    $("#btnTypeSubmit").click();
+    
+}
 
 function setShowInputs() {
     if ($("#typePublication").val() == "1") // Book
@@ -128,6 +157,17 @@ function setShowInputs() {
     }
 }
 
+
+
+
+function isYearofBirthValid(birth) {
+    if (parseInt(birth) < 1400 || parseInt(birth) > new Date().getFullYear() + 1) {
+        alert("invalid year");
+        return false;
+    }
+    return true;
+}
+
 function fillFilds() {
 
     $("input:text").each(function () {
@@ -138,7 +178,9 @@ function fillFilds() {
     });
     var currdate = new Date();
     var currdate = (currdate.getMonth() + 1) + '/' + currdate.getDate() + '/' + currdate.getFullYear();
-    $("#PublishingYear").val(currdate);
+    var currdateOnlyYear = new Date();
+    var currdateOnlyYear = currdateOnlyYear.getFullYear();
+    $("#PublishingYear").val(currdateOnlyYear);
     $("#PublicationDate").val(currdate);
 
 }
