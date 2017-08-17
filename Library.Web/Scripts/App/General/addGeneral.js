@@ -1,4 +1,4 @@
-﻿var validete;
+﻿
 $(document).ready(function () {
 
     fillFilds();
@@ -82,7 +82,7 @@ $(document).ready(function () {
 
 })
 
-validete = function () {
+function validete() {
     var isvalidate = true;
     var isPublishingYear = isYearofBirthValid($("#PublishingYear").val());
     var isPublicationName = isEmpty($("#PublicationName").val());
