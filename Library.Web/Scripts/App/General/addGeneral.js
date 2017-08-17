@@ -5,29 +5,6 @@ $(document).ready(function () {
     $("ul.nav-sidebar li").each(function () {
         $(this).removeClass("active");
     });
-    var lementsLi = document.querySelectorAll('ul.nav-sidebar li');
-    var listOfObjectsElementClass = [];
-
-    function elementClass()
-    {
-        this.baseURI;
-        this.clientHeight;
-    }
-    function elementClassProto() {
-        this.clientHeight;
-    }
-    elementClass.prototype.__proto__ = elementClassProto;
-
-    for (var lementLi in lementsLi) {
-        if (!lementsLi.hasOwnProperty(lementLi)) {
-            continue;
-        }
-        var elementClassItem = new elementClass();
-        elementClassItem.baseURI = lementsLi[lementLi].baseURI;
-        elementClassItem.clientHeight = lementsLi[lementLi].clientHeight;
-        listOfObjectsElementClass.push(elementClassItem);
-    }
-
     $("#generalActionLink").addClass("active");
     $(".bookShow").each(function () {
         $(this).hide();
@@ -148,9 +125,6 @@ function setValidateClass()
 {
     var lementsInput = document.querySelectorAll('input');
     for (var i = 0; i < lementsInput.length; i++) {
-
-
-
         if ($("#typePublication").val() == "1") { // Book
             if (lementsInput[i].id == "Author" || lementsInput[i].id == "NumberPages" || lementsInput[i].id == "PublishingYear") {
                 lementsInput[i].classList.remove('notValidate');

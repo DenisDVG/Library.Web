@@ -47,8 +47,53 @@
         }
         console.log(iDs);
         $("#PublishingHousesIds").val(iDs);
-});
-
-
+    });
 
 })
+
+
+var validete = function () {
+    var isvalidate = true;
+    var isPublishingYear = isYearofBirthValid($("#PublishingYear").val());
+    var isPublicationName = isEmpty($("#PublicationName").val());
+    var lementsInput = document.querySelectorAll('input');
+    console.log(lementsInput);
+
+    for (var i = 0; i < lementsInput.length; i++) {
+        if (!isEmpty(lementsInput[i].value)) {
+            lementsInput[i].className = lementsInput[i].className.replace(/errorClass/, "");
+            lementsInput[i].className += " errorClass";
+            isvalidate = false;
+        }
+        if (isEmpty(lementsInput[i].value)) {
+            lementsInput[i].className = lementsInput[i].className.replace(/errorClass/, "");
+        }
+    }
+    
+    if (!isPublishingYear) {
+        document.getElementById("PublishingYear").classList.remove('errorClass');
+        document.getElementById("PublishingYear").classList.add('errorClass');
+    }
+    if (isPublishingYear) {
+        document.getElementById("PublishingYear").classList.remove('errorClass');
+    }
+
+    if (isvalidate && isPublishingYear) {
+        $("#btnTypeSubmit").click();
+    }
+
+
+}
+function isEmpty(value) {
+    if (value == null || value == "") {
+        return false;
+    }
+    return true;
+}
+function isYearofBirthValid(birth) {
+    if (parseInt(birth) < 1400 || parseInt(birth) > new Date().getFullYear() + 1 || birth == "") {
+        return false;
+    }
+    return true;
+}
+

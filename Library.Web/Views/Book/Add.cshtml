@@ -60,7 +60,7 @@
                         <div class="form-group">
                             <label for="categoryNumberAdd" class="col-sm-3 control-label">Publishing Year</label>
                             <div class="col-sm-6">
-                                @Html.TextBoxFor(x => x.PublishingYear, new { @class = "form-control", required = "required", placeholder = "MM/dd/yyyy"})
+                                @Html.TextBoxFor(x => x.PublishingYear, new { @class = "form-control", required = "required", placeholder = "yyyy", @type = "number" })
                             </div>
                         </div>
                     </div>
@@ -71,7 +71,10 @@
                             </div>
 
                             <div class="col-sm-6">
-                                <button type="submit" class="btn btn-warning">Add Book</button>
+                                <button type="button" onclick="validete();" class="btn btn-warning" id="btnTypeButton">Add Book</button>
+                            </div>
+                            <div class="col-sm-6">
+                                <button type="submit" class="btn btn-warning hidden" id="btnTypeSubmit">Add Book</button>
                             </div>
                         </div>
                     </div>
