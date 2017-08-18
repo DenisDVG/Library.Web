@@ -1,5 +1,8 @@
 ﻿$(document).ready(function () {
-
+    $("#btnTypeButton").click(function () {
+        alert();
+        valideteAddBook();
+    });
     $("#PublishingHousesIds").val("Error");
     $("#orders").kendoMultiSelect({
         placeholder: "Select Publishing Houses...",
@@ -52,7 +55,7 @@
 })
 
 
-var validete = function () {
+function valideteAddBook() {
     var isvalidate = true;
     var isPublishingYear = isYearofBirthValid($("#PublishingYear").val());
     var isPublicationName = isEmpty($("#PublicationName").val());
