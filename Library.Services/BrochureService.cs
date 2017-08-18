@@ -108,6 +108,12 @@ namespace Library.Services
             }
             return stringItem;
         }
+        public void AddGet(AddBrochureViewModel view)
+        {
+            var publication = InsertPablication(view);
+            InsertBrochure(view, publication);
+            InsertPublicationInPublisihngHouse(view, publication);
+        }
         public Brochure UpdateBrochure(EditBrochureViewModel view)
         {
             var Brochure = GetBrochureById(view.Id);

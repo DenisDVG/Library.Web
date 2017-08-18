@@ -47,9 +47,7 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Brochure");
             }
-            var publication = _service.InsertPablication(view);
-            _service.InsertBrochure(view, publication);
-            _service.InsertPublicationInPublisihngHouse(view, publication);
+            _service.AddGet(view);
             return RedirectToAction("Index", "Brochure");
         }
 
