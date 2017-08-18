@@ -41,6 +41,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\BookRepository.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Library.Entities\Library.Entities.csproj">
+      <Project>{F871B072-DAD2-4E85-B2E0-F949CA0A6B4A}</Project>
+      <Name>Library.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Library.ViewModels\Library.ViewModels.csproj">
+      <Project>{511E038E-5684-475B-8532-024042288DB5}</Project>
+      <Name>Library.ViewModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

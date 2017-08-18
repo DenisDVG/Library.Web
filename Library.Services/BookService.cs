@@ -43,7 +43,7 @@ namespace Library.Services
         {
             return _publishingHouses.Select(x => new PublishingHousesVieModel { Id = x.Id, Name = x.PublishingHouseName }).ToList();
         }
-        public Publication InsertPablication(AddBookViewModel view)
+        public Publication InsertPublication(AddBookViewModel view)
         {
             var publication = new Publication();
             publication.Name = view.PublicationName;
@@ -107,7 +107,7 @@ namespace Library.Services
         }
         public void AddBookPost(AddBookViewModel view)
         {
-            var publication = InsertPablication(view);
+            var publication = InsertPublication(view);
             InsertBook(view, publication);
             InsertPublicationInPublisihngHouse(view, publication);
         }

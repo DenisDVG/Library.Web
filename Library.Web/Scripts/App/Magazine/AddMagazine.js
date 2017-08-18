@@ -1,14 +1,4 @@
-﻿var a = 1;
-function b() {
-    a = 10;
-    return;
-    function a() { }
-}
-b();
-console.log(a); // 1
-
-
-
+﻿
 $(document).ready(function () {
     $("#btnTypeButton").click(function () {
         validete();
@@ -60,7 +50,7 @@ $(document).ready(function () {
         }
         console.log(iDs);
         $("#PublishingHousesIds").val(iDs);
-});
+   });
 
 
 })
@@ -92,7 +82,10 @@ $(document).ready(function () {
         document.getElementById("PublicationDate").classList.remove('errorClass');
     }
 
+    console.log(magazineModel);
+
     if (isvalidate && isPublicationDate) {
+
         $("#btnTypeSubmit").click();
     }
 
@@ -111,3 +104,4 @@ function validateDate(testdate) {
     var date_regex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
     return date_regex.test(testdate);
 }
+
