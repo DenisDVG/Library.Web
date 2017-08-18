@@ -47,9 +47,7 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Book");
             }
-            var publication = _service.InsertPablication(view);
-            _service.InsertBook(view, publication);
-            _service.InsertPublicationInPublisihngHouse(view, publication);
+            _service.AddBookPost(view);
             return RedirectToAction("Index", "Book");
         }
 
@@ -65,38 +63,16 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Book");
             }
-            var view = new EditBookViewModel();
-            var book = _service.GetBookById(id);
-            view.Author = book.Author;
-            view.NumberPages = book.NumberPages;
-            view.PublicationName = book.Publication.Name;
-            view.PublishingYear = book.PublishingYear;
-            return View(view);
+            var editBookViewModel = _service.EditBookGet(id);
+
+            return View(editBookViewModel);
         }
 
         [HttpPost]
         public ActionResult Edit(EditBookViewModel view)
         {
-            var book = _service.UpdateBook(view);
-            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(book);
-            string[] subStrings = view.PublishingHousesIds.Split(',');
-            var idsNew = new List<string>();
-            for (int i = 0; i < subStrings.Length; i++)
-            {
-                idsNew.Add(subStrings[i]);
-            }
-            if (publisihngHouseIdsExist.Count == subStrings.Length)
-            {
-                return RedirectToAction("Index", "Book");
-            }
-            if (publisihngHouseIdsExist.Count > idsNew.Count)
-            {
-                _service.DeletePublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
-            }
-            if (publisihngHouseIdsExist.Count < idsNew.Count)
-            {
-                _service.AddPublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
-            }
+            _service.EditBookPost(view);
+
             return RedirectToAction("Index", "Book");
         }
         public ActionResult Delete(string id)

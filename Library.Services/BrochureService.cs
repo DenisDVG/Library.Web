@@ -123,6 +123,37 @@ namespace Library.Services
             _brochureRepository.Save();
             return Brochure;
         }
+        public EditBrochureViewModel EditGet(string id)
+        {
+            var view = new EditBrochureViewModel();
+            var brochure = GetBrochureById(id);
+            view.CoverType = brochure.CoverType;
+            view.NumberPages = brochure.NumberPages;
+            view.PublicationName = brochure.Publication.Name;
+            view.PublishingYear = brochure.PublishingYear;
+            view.TomFilling = brochure.TomFilling;
+            return view;
+        }
+        public void EditPost(EditBrochureViewModel view)
+        {
+            var brochure = UpdateBrochure(view);
+            var publisihngHouseIdsExist = GetPublishingHousesForEditExistId(brochure);
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            var idsNew = new List<string>();
+            for (int i = 0; i < subStrings.Length; i++)
+            {
+                idsNew.Add(subStrings[i]);
+            }
+            if (publisihngHouseIdsExist.Count > idsNew.Count)
+            {
+                DeletePublicationInPublisihngHouses(brochure, publisihngHouseIdsExist, idsNew);
+            }
+            if (publisihngHouseIdsExist.Count < idsNew.Count)
+            {
+                AddPublicationInPublisihngHouses(brochure, publisihngHouseIdsExist, idsNew);
+            }
+
+        }
         public void AddPublicationInPublisihngHouses(Brochure Brochure, List<string> publisihngHouseIdsExist, List<string> idsNew)
         {
             var stringForAdd = new List<string>();

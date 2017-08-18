@@ -65,39 +65,14 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Brochure");
             }
-            var view = new EditBrochureViewModel();
-            var brochure = _service.GetBrochureById(id);
-            view.CoverType = brochure.CoverType;
-            view.NumberPages = brochure.NumberPages;
-            view.PublicationName = brochure.Publication.Name;
-            view.PublishingYear = brochure.PublishingYear;
-            view.TomFilling = brochure.TomFilling;
-            return View(view);
+            var editBrochureViewModel = _service.EditGet(id);
+            return View(editBrochureViewModel);
         }
 
         [HttpPost]
         public ActionResult Edit(EditBrochureViewModel view)
         {
-            var brochure = _service.UpdateBrochure(view);
-            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(brochure);
-            string[] subStrings = view.PublishingHousesIds.Split(',');
-            var idsNew = new List<string>();
-            for (int i = 0; i < subStrings.Length; i++)
-            {
-                idsNew.Add(subStrings[i]);
-            }
-            if (publisihngHouseIdsExist.Count == subStrings.Length)
-            {
-                return RedirectToAction("Index", "Brochure");
-            }
-            if (publisihngHouseIdsExist.Count > idsNew.Count)
-            {
-                _service.DeletePublicationInPublisihngHouses(brochure, publisihngHouseIdsExist, idsNew);
-            }
-            if (publisihngHouseIdsExist.Count < idsNew.Count)
-            {
-                _service.AddPublicationInPublisihngHouses(brochure, publisihngHouseIdsExist, idsNew);
-            }
+            _service.EditPost(view);
             return RedirectToAction("Index", "Brochure");
         }
         public ActionResult Delete(string id)

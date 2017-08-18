@@ -118,6 +118,40 @@ namespace Library.Services
             _magazineRepository.Save();
             return Magazine;
         }
+        public void AddMagazine(AddMagazineViewModel view)
+        {
+            var publication = InsertPablication(view);
+            InsertMagazine(view, publication);
+            InsertPublicationInPublisihngHouse(view, publication);
+        }
+        public EditMagazineViewModel EditGet(string id)
+        {
+            var view = new EditMagazineViewModel();
+            var magazine = GetMagazineById(id);
+            view.MagazineNumber = magazine.MagazineNumber;
+            view.PublicationDate = magazine.PublicationDate;
+            view.PublicationName = magazine.Publication.Name;
+            return view;
+        }
+        public void EditPost(EditMagazineViewModel view)
+        {
+            var magazine = UpdateMagazine(view);
+            var publisihngHouseIdsExist = GetPublishingHousesForEditExistId(magazine);
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            var idsNew = new List<string>();
+            for (int i = 0; i < subStrings.Length; i++)
+            {
+                idsNew.Add(subStrings[i]);
+            }
+            if (publisihngHouseIdsExist.Count > idsNew.Count)
+            {
+                DeletePublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
+            }
+            if (publisihngHouseIdsExist.Count < idsNew.Count)
+            {
+                AddPublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
+            }
+        }
         public void AddPublicationInPublisihngHouses(Magazine Magazine, List<string> publisihngHouseIdsExist, List<string> idsNew)
         {
             var stringForAdd = new List<string>();

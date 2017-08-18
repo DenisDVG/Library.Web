@@ -1,4 +1,15 @@
-﻿$(document).ready(function () {
+﻿var a = 1;
+function b() {
+    a = 10;
+    return;
+    function a() { }
+}
+b();
+console.log(a); // 1
+
+
+
+$(document).ready(function () {
     $("#btnTypeButton").click(function () {
         validete();
     });

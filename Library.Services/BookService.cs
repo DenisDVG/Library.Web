@@ -105,6 +105,42 @@ namespace Library.Services
             }
             return stringItem;
         }
+        public void AddBookPost(AddBookViewModel view)
+        {
+            var publication = InsertPablication(view);
+            InsertBook(view, publication);
+            InsertPublicationInPublisihngHouse(view, publication);
+        }
+        public EditBookViewModel EditBookGet(string id)
+        {
+
+            var view = new EditBookViewModel();
+            var book = GetBookById(id);
+            view.Author = book.Author;
+            view.NumberPages = book.NumberPages;
+            view.PublicationName = book.Publication.Name;
+            view.PublishingYear = book.PublishingYear;
+            return view;
+        }
+        public void EditBookPost(EditBookViewModel view)
+        {
+            var book = UpdateBook(view);
+            var publisihngHouseIdsExist = GetPublishingHousesForEditExistId(book);
+            string[] subStrings = view.PublishingHousesIds.Split(',');
+            var idsNew = new List<string>();
+            for (int i = 0; i < subStrings.Length; i++)
+            {
+                idsNew.Add(subStrings[i]);
+            }
+            if (publisihngHouseIdsExist.Count > idsNew.Count)
+            {
+                DeletePublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
+            }
+            if (publisihngHouseIdsExist.Count < idsNew.Count)
+            {
+                AddPublicationInPublisihngHouses(book, publisihngHouseIdsExist, idsNew);
+            }
+        }
         public Book UpdateBook(EditBookViewModel view)
         {
             var book = GetBookById(view.Id);

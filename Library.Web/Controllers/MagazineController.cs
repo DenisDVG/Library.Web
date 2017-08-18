@@ -47,9 +47,7 @@ namespace Library.Web.Controllers
             {
                 return RedirectToAction("Index", "Magazine");
             }
-            var publication = _service.InsertPablication(view);
-            _service.InsertMagazine(view, publication);
-            _service.InsertPublicationInPublisihngHouse(view, publication);
+            _service.AddMagazine(view);
             return RedirectToAction("Index", "Magazine");
         }
 
@@ -61,41 +59,19 @@ namespace Library.Web.Controllers
         [HttpGet]
         public ActionResult Edit(string id)
         {
+            var editMagazineViewModel = _service.EditGet(id);
             if (string.IsNullOrEmpty(id))
             {
                 return RedirectToAction("Index", "Magazine");
             }
-            var view = new EditMagazineViewModel();
-            var magazine = _service.GetMagazineById(id);
-            view.MagazineNumber = magazine.MagazineNumber;
-            view.PublicationDate = magazine.PublicationDate;
-            view.PublicationName = magazine.Publication.Name;
-            return View(view);
+
+            return View(editMagazineViewModel);
         }
 
         [HttpPost]
         public ActionResult Edit(EditMagazineViewModel view)
         {
-            var magazine = _service.UpdateMagazine(view);
-            var publisihngHouseIdsExist = _service.GetPublishingHousesForEditExistId(magazine);
-            string[] subStrings = view.PublishingHousesIds.Split(',');
-            var idsNew = new List<string>();
-            for (int i = 0; i < subStrings.Length; i++)
-            {
-                idsNew.Add(subStrings[i]);
-            }
-            if (publisihngHouseIdsExist.Count == subStrings.Length)
-            {
-                return RedirectToAction("Index", "Magazine");
-            }
-            if (publisihngHouseIdsExist.Count > idsNew.Count)
-            {
-                _service.DeletePublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
-            }
-            if (publisihngHouseIdsExist.Count < idsNew.Count)
-            {
-                _service.AddPublicationInPublisihngHouses(magazine, publisihngHouseIdsExist, idsNew);
-            }
+            _service.EditPost(view);
             return RedirectToAction("Index", "Magazine");
         }
         public ActionResult Delete(string id)
